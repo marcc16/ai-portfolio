@@ -1,0 +1,44 @@
+/* AGGRESSIVE ChatKit dark theme override */
+
+/* Target ALL ChatKit elements */
+[data-chatkit-root],
+[data-chatkit-root] *,
+div[class*="chatkit"],
+div[class*="ChatKit"],
+div[id*="chatkit"],
+div[id*="ChatKit"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Force dark theme on specific elements that commonly have white backgrounds */
+[data-chatkit-root] [role="article"],
+[data-chatkit-root] [role="dialog"],
+[data-chatkit-root] [role="region"],
+[data-chatkit-root] div[class],
+[data-chatkit-root] section {
+  background: hsl(var(--background)) !important;
+  background-color: hsl(var(--background)) !important;
+}
+
+/* Nuclear option: Override ANY inline styles with white/light backgrounds */
+[style*="background: white"],
+[style*="background: #fff"],
+[style*="background: #FFF"],
+[style*="background: rgb(255, 255, 255)"],
+[style*="background-color: white"],
+[style*="background-color: #fff"],
+[style*="background-color: #FFF"],
+[style*="background-color: rgb(255, 255, 255)"],
+[style*="background-color:white"],
+[style*="background-color:#fff"],
+[style*="background-color:#FFF"],
+[style*="background-color:rgb(255, 255, 255)"] {
+  background: hsl(var(--background)) !important;
+  background-color: hsl(var(--background)) !important;
+}
+
+/* Make sure text is visible */
+[data-chatkit-root] * {
+  color: hsl(var(--foreground)) !important;
+}

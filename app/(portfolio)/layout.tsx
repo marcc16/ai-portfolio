@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SanityLive } from "@/sanity/lib/live";
 import "../globals.css";
+import "../chatkit-override.css";
 import { draftMode } from "next/headers";
 import Script from "next/script";
-import { VisualEditing } from "next-sanity/visual-editing";
+// import { VisualEditing } from "next-sanity/visual-editing"; // Temporarily disabled - module not found
 import { AppSidebar } from "@/components/app-sidebar";
-import { ModeToggle } from "@/components/DarkModeToggle";
+import { ClientModeToggle } from "@/components/ClientModeToggle";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import { FloatingDock } from "@/components/FloatingDock";
 import SidebarToggle from "@/components/SidebarToggle";
@@ -35,7 +36,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        elements: {
+          // Deshabilitar el componente de sign in automático
+          rootBox: "clerk-root-box",
+        },
+      }}
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/"
+    >
       <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -62,7 +72,7 @@ export default async function RootLayout({
               {/* Mode Toggle - Desktop: bottom right next to AI chat, Mobile: top right next to burger menu */}
               <div className="fixed md:bottom-6 md:right-24 top-4 right-18 md:top-auto md:left-auto z-20">
                 <div className="w-10 h-10 md:w-12 md:h-12">
-                  <ModeToggle />
+                  <ClientModeToggle />
                 </div>
               </div>
             </SidebarProvider>
@@ -72,7 +82,7 @@ export default async function RootLayout({
 
             {(await draftMode()).isEnabled && (
               <>
-                <VisualEditing />
+                {/* <VisualEditing /> */}
                 <DisableDraftMode />
               </>
             )}

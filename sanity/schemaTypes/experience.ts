@@ -77,6 +77,48 @@ export default defineType({
       description: "Quantifiable accomplishments",
     }),
     defineField({
+      name: "aiContext",
+      title: "AI Context (STAR Method)",
+      type: "object",
+      description: "Hidden context for the AI Agent to explain this role effectively",
+      fields: [
+        {
+          name: "situation",
+          title: "Situation",
+          type: "text",
+          rows: 3,
+          description: "What was the context/challenge?",
+        },
+        {
+          name: "task",
+          title: "Task",
+          type: "text",
+          rows: 2,
+          description: "What were you responsible for?",
+        },
+        {
+          name: "action",
+          title: "Action",
+          type: "text",
+          rows: 4,
+          description: "What did you specifically do? (Technical details)",
+        },
+        {
+          name: "result",
+          title: "Result",
+          type: "text",
+          rows: 3,
+          description: "What was the outcome? (Metrics, impact)",
+        },
+        {
+          name: "keyLearnings",
+          title: "Key Learnings",
+          type: "array",
+          of: [{ type: "string" }],
+        },
+      ],
+    }),
+    defineField({
       name: "technologies",
       title: "Technologies Used",
       type: "array",

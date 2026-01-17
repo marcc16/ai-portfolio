@@ -1,13 +1,12 @@
 export { AboutSection } from "./AboutSection";
 export { AchievementsSection } from "./AchievementsSection";
 export { BlogSection } from "./BlogSection";
+export { CalEmbed } from "./CalEmbed";
 export { CertificationsSection } from "./CertificationsSection";
-export { ContactForm } from "./ContactForm";
 export { ContactSection } from "./ContactSection";
 export { EducationSection } from "./EducationSection";
 export { ExperienceSection } from "./ExperienceSection";
+export { FitAssessmentSection } from "./FitAssessmentSection";
 export { HeroSection } from "./HeroSection";
 export { ProjectsSection } from "./ProjectsSection";
-export { ServicesSection } from "./ServicesSection";
 export { SkillsSection } from "./SkillsSection";
-export { TestimonialsSection } from "./TestimonialsSection";

@@ -61,6 +61,19 @@ export default defineType({
       validation: (Rule) => Rule.min(0),
     }),
     defineField({
+      name: "strengthLevel",
+      title: "Strength Level",
+      type: "string",
+      options: {
+        list: [
+          { title: "Strong", value: "strong" },
+          { title: "Moderate", value: "moderate" },
+          { title: "Gap (Learning)", value: "gap" },
+        ],
+      },
+      description: "Honest assessment for recruiters (Strong/Moderate/Gap)",
+    }),
+    defineField({
       name: "color",
       title: "Brand Color",
       type: "string",

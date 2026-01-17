@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(npx shadcn@latest add dialog)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:clerk.com)",
+      "Bash(find:*)"
+    ]
+  }
+}

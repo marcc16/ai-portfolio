@@ -46,11 +46,26 @@ export function SkillsChart({ skills }: SkillsChartProps) {
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ");
 
+        // Color mapping based on category
+        const getCategoryColor = (cat: string) => {
+          const normalized = cat.toLowerCase();
+          if (normalized.includes("ai") || normalized.includes("ml") || normalized.includes("data")) return "#8B5CF6"; // Violet
+          if (normalized.includes("backend") || normalized.includes("api")) return "#3B82F6"; // Blue
+          if (normalized.includes("frontend") || normalized.includes("web") || normalized.includes("design")) return "#10B981"; // Emerald
+          if (normalized.includes("cloud") || normalized.includes("devops")) return "#06B6D4"; // Cyan
+          if (normalized.includes("database")) return "#6366F1"; // Indigo
+          if (normalized.includes("tools")) return "#F97316"; // Orange
+          if (normalized.includes("soft")) return "#EC4899"; // Pink
+          return "#64748B"; // Slate default
+        };
+
+        const defaultCategoryColor = getCategoryColor(category);
+
         // Prepare chart data and config
         const chartData = categorySkills.map((skill) => ({
           name: skill.name || "Unknown",
           proficiency: skill.percentage || 0,
-          fill: skill.color || "var(--color-default)",
+          fill: skill.color || defaultCategoryColor,
         }));
 
         const chartConfig = {
@@ -59,7 +74,7 @@ export function SkillsChart({ skills }: SkillsChartProps) {
             color: "hsl(var(--primary))",
           },
           default: {
-            color: "hsl(var(--primary))",
+            color: defaultCategoryColor,
           },
         } satisfies ChartConfig;
 

@@ -149,3 +149,14 @@
 .transform-3d {
   transform-style: preserve-3d;
 }
+
+/* Prevenir que Clerk muestre componentes automáticamente */
+/* Solo permitir nuestros modales personalizados */
+.cl-modal:not(.clerk-root-box .cl-modal),
+.cl-modalBackdrop:not(.clerk-root-box .cl-modalBackdrop),
+.cl-component:not(.clerk-root-box .cl-component) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

@@ -4,8 +4,7 @@ import type {
   ThemeOption,
 } from "@openai/chatkit-react";
 
-export const WORKFLOW_ID =
-  process.env.NEXT_PUBLIC_CHATKIT_WORKFLOW_ID?.trim() ?? "";
+export const WORKFLOW_ID = "wf_68e549c569a48190bf4e861854c273630d447668bfdd5642";
 
 export const CREATE_SESSION_ENDPOINT = "/api/create-session";
 
