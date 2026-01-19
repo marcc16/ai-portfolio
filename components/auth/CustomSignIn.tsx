@@ -25,7 +25,7 @@ export function CustomSignIn({ onSuccess }: CustomSignInProps) {
     try {
       await signIn.authenticateWithRedirect({
         strategy,
-        redirectUrl: "/sso-callback",
+        redirectUrl: "/",
         redirectUrlComplete: "/",
       });
     } catch (err: any) {
