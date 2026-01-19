@@ -10,7 +10,10 @@
       "WebFetch(domain:openai.github.io)",
       "Bash(chmod:*)",
       "Bash(test:*)",
-      "WebFetch(domain:community.openai.com)"
+      "WebFetch(domain:community.openai.com)",
+      "Bash(npm run build:*)",
+      "Bash(node --version:*)",
+      "Bash(npm --version)"
     ]
   }
 }
