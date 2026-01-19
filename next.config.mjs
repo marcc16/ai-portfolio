@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     /* config options here */
+    experimental: {
+        turbo: false, // Disable Turbopack due to Clerk compatibility issue
+    },
     images: {
         remotePatterns: [
             {
