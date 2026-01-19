@@ -114,7 +114,7 @@ export async function BlogSection() {
                     href={`/blog/${post.slug?.current}`}
                     className="inline-flex items-center text-primary hover:underline text-xs @md/card:text-sm font-medium"
                   >
-                    Read More →
+                    Leer Más →
                   </Link>
                 </div>
               </article>

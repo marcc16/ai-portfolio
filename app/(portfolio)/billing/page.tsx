@@ -31,7 +31,7 @@ export default function BillingPage() {
                         </div>
                         <h3 className="text-lg font-semibold mb-2">Más Mensajes</h3>
                         <p className="text-sm text-muted-foreground">
-                            Chatea sin límites con tu AI Twin. Hasta 20 mensajes diarios.
+                            Chatea sin límites con tu AI Twin. Hasta 10 mensajes diarios.
                         </p>
                     </div>
 

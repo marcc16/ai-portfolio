@@ -6,6 +6,7 @@ import Chat from "@/components/chat/Chat";
 import { sanityFetch } from "@/sanity/lib/live";
 import SidebarToggle from "../SidebarToggle";
 import type { CHAT_PROFILE_QUERYResult } from "@/sanity.types";
+import { useGuestSession } from "@/hooks/use-guest-session";
 
 const CHAT_PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
     _id,
@@ -28,6 +29,9 @@ const CHAT_PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
 
 function ChatWrapper() {
   const [profile, setProfile] = useState<CHAT_PROFILE_QUERYResult | null>(null);
+
+  // Initialize guest session cookie for rate limiting
+  useGuestSession();
 
   useEffect(() => {
     async function fetchProfile() {

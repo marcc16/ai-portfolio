@@ -75,7 +75,7 @@ export async function HeroSection() {
                     className="px-4 py-2 @md/hero:px-6 @md/hero:py-3 rounded-lg bg-white/10 hover:bg-white/20 border border-white/10 hover:border-white/20 text-white transition-all duration-700 font-medium text-sm @md/hero:text-base flex items-center gap-2 group"
                   >
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform duration-500" />
-                    Customize for my business
+                    Quiero implementar IA
                   </SmoothScrollButton>
 
                   {profile.socialLinks.linkedin && (

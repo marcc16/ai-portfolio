@@ -5,7 +5,12 @@
       "Bash(npx shadcn@latest add dialog)",
       "Bash(npm install:*)",
       "WebFetch(domain:clerk.com)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "WebFetch(domain:platform.openai.com)",
+      "WebFetch(domain:openai.github.io)",
+      "Bash(chmod:*)",
+      "Bash(test:*)",
+      "WebFetch(domain:community.openai.com)"
     ]
   }
 }

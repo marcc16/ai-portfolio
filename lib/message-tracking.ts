@@ -106,3 +106,93 @@ function getNextResetTime(): string {
     tomorrow.setHours(0, 0, 0, 0);
     return tomorrow.toISOString();
 }
+
+/**
+ * Job Analysis specific tracking functions
+ * These use a different Redis key prefix to avoid conflicts with chat messages
+ */
+
+/**
+ * Get the key for tracking daily job analyses
+ */
+function getJobAnalysisKey(identifier: string, isGuest: boolean): string {
+    const prefix = isGuest ? "guest" : "user";
+    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+    return `job-analysis:${prefix}:${identifier}:${today}`;
+}
+
+/**
+ * Get job analysis count for a user/guest
+ */
+export async function getJobAnalysisCount(
+    identifier: string,
+    isGuest: boolean
+): Promise<MessageCount> {
+    if (!redis) {
+        return {
+            count: 0,
+            resetAt: getNextResetTime(),
+        };
+    }
+
+    const key = getJobAnalysisKey(identifier, isGuest);
+    const count = await redis.get<number>(key);
+
+    return {
+        count: count || 0,
+        resetAt: getNextResetTime(),
+    };
+}
+
+/**
+ * Increment job analysis count
+ */
+export async function incrementJobAnalysisCount(
+    identifier: string,
+    isGuest: boolean,
+    limit?: number
+): Promise<MessageCount> {
+    if (!redis) {
+        return {
+            count: 0,
+            resetAt: getNextResetTime(),
+        };
+    }
+
+    const key = getJobAnalysisKey(identifier, isGuest);
+    const newCount = await redis.incr(key);
+
+    // Set expiration to end of day (in seconds)
+    const now = new Date();
+    const endOfDay = new Date(now);
+    endOfDay.setHours(23, 59, 59, 999);
+    const ttl = Math.floor((endOfDay.getTime() - now.getTime()) / 1000);
+
+    await redis.expire(key, ttl);
+
+    return {
+        count: newCount,
+        resetAt: getNextResetTime(),
+    };
+}
+
+/**
+ * Check if user/guest has remaining job analyses
+ */
+export async function hasRemainingJobAnalyses(
+    identifier: string,
+    isGuest: boolean,
+    customLimit?: number
+): Promise<{ allowed: boolean; remaining: number; limit: number }> {
+    const { count } = await getJobAnalysisCount(identifier, isGuest);
+
+    // Use custom limit if provided, otherwise use defaults
+    const limit = customLimit ?? (isGuest ? 1 : 3);
+    const remaining = Math.max(0, limit - count);
+
+    return {
+        allowed: count < limit,
+        remaining,
+        limit,
+    };
+}

@@ -36,13 +36,13 @@ export function ProfileImage({
         priority
       />
 
-      {/* Online Badge */}
+      {/* En línea Badge */}
       <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
         <div className="relative">
           <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
           <div className="absolute inset-0 w-2.5 h-2.5 bg-green-500 rounded-full animate-ping" />
         </div>
-        <span className="text-xs font-medium text-white">Online</span>
+        <span className="text-xs font-medium text-white">En línea</span>
       </div>
 
       {/* Hover Overlay */}
@@ -58,10 +58,10 @@ export function ProfileImage({
           )}
 
           <div className="text-white text-xl font-semibold">
-            {open ? "Close Chat" : "Chat with AI Twin"}
+            {open ? "Close Chat" : "Habla con mi clon IA"}
           </div>
           <div className="text-white/80 text-sm">
-            {open ? "Click to close chat" : "Click to open chat"}
+            {open ? "Haz clic para cerrar" : "Haz clic para chatear"}
           </div>
         </div>
       </div>

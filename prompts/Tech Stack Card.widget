@@ -1,0 +1,292 @@
+{
+  "version": "1.0",
+  "name": "Tech Stack Card",
+  "template": "{\"type\":\"Card\",\"size\":\"md\",\"background\":\"surface-elevated\",\"children\":[{\"type\":\"Col\",\"gap\":3,\"children\":[{\"type\":\"Row\",\"gap\":2,\"align\":\"center\",\"children\":[{\"type\":\"Icon\",\"name\":{{ (icon) | tojson }},\"size\":\"2xl\",\"color\":\"primary\"},{\"type\":\"Title\",\"value\":{{ (title) | tojson }},\"size\":\"xl\",\"weight\":\"bold\"}]},{\"type\":\"Divider\"},{\"type\":\"Col\",\"gap\":2,\"children\":[{\"type\":\"Text\",\"value\":\"Frontend\",\"size\":\"sm\",\"weight\":\"semibold\",\"color\":\"secondary\"},{\"type\":\"Row\",\"wrap\":\"wrap\",\"gap\":1.5,\"children\":[{%- set _c -%}{%-for t in frontend -%}{%-set idx = loop.index0 -%},{\"type\":\"Badge\",\"key\":{{ ((\"fe-\" ~ idx)) | tojson }},\"label\":{{ (t) | tojson }},\"color\":\"info\"}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]},{\"type\":\"Divider\"},{\"type\":\"Col\",\"gap\":2,\"children\":[{\"type\":\"Text\",\"value\":\"Backend\",\"size\":\"sm\",\"weight\":\"semibold\",\"color\":\"secondary\"},{\"type\":\"Row\",\"wrap\":\"wrap\",\"gap\":1.5,\"children\":[{%- set _c -%}{%-for t in backend -%}{%-set idx = loop.index0 -%},{\"type\":\"Badge\",\"key\":{{ ((\"be-\" ~ idx)) | tojson }},\"label\":{{ (t) | tojson }},\"color\":\"success\"}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]},{\"type\":\"Divider\"},{\"type\":\"Col\",\"gap\":2,\"children\":[{\"type\":\"Text\",\"value\":\"DevOps\",\"size\":\"sm\",\"weight\":\"semibold\",\"color\":\"secondary\"},{\"type\":\"Row\",\"wrap\":\"wrap\",\"gap\":1.5,\"children\":[{%- set _c -%}{%-for t in devops -%}{%-set idx = loop.index0 -%},{\"type\":\"Badge\",\"key\":{{ ((\"do-\" ~ idx)) | tojson }},\"label\":{{ (t) | tojson }},\"color\":\"warning\"}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]}]}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "icon": {
+        "type": "string",
+        "enum": [
+          "analytics",
+          "atom",
+          "bolt",
+          "book-open",
+          "book-closed",
+          "calendar",
+          "chart",
+          "check",
+          "check-circle",
+          "check-circle-filled",
+          "chevron-left",
+          "chevron-right",
+          "circle-question",
+          "compass",
+          "cube",
+          "document",
+          "dots-horizontal",
+          "empty-circle",
+          "globe",
+          "keys",
+          "lab",
+          "images",
+          "info",
+          "lifesaver",
+          "lightbulb",
+          "mail",
+          "map-pin",
+          "maps",
+          "name",
+          "notebook",
+          "notebook-pencil",
+          "page-blank",
+          "phone",
+          "plus",
+          "profile",
+          "profile-card",
+          "star",
+          "star-filled",
+          "search",
+          "sparkle",
+          "sparkle-double",
+          "square-code",
+          "square-image",
+          "square-text",
+          "suitcase",
+          "settings-slider",
+          "user",
+          "write",
+          "write-alt",
+          "write-alt2",
+          "reload",
+          "play",
+          "mobile",
+          "desktop",
+          "external-link"
+        ]
+      },
+      "frontend": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "backend": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "devops": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "title",
+      "icon",
+      "frontend",
+      "backend",
+      "devops"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "Card",
+    "size": "md",
+    "background": "surface-elevated",
+    "children": [
+      {
+        "type": "Col",
+        "gap": 3,
+        "children": [
+          {
+            "type": "Row",
+            "gap": 2,
+            "align": "center",
+            "children": [
+              {
+                "type": "Icon",
+                "name": "square-code",
+                "size": "2xl",
+                "color": "primary"
+              },
+              {
+                "type": "Title",
+                "value": "Tech Stack",
+                "size": "xl",
+                "weight": "bold"
+              }
+            ]
+          },
+          {
+            "type": "Divider"
+          },
+          {
+            "type": "Col",
+            "gap": 2,
+            "children": [
+              {
+                "type": "Text",
+                "value": "Frontend",
+                "size": "sm",
+                "weight": "semibold",
+                "color": "secondary"
+              },
+              {
+                "type": "Row",
+                "wrap": "wrap",
+                "gap": 1.5,
+                "children": [
+                  {
+                    "type": "Badge",
+                    "key": "fe-0",
+                    "label": "React",
+                    "color": "info"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "fe-1",
+                    "label": "TypeScript",
+                    "color": "info"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "fe-2",
+                    "label": "Next.js",
+                    "color": "info"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "fe-3",
+                    "label": "Tailwind CSS",
+                    "color": "info"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "fe-4",
+                    "label": "Vite",
+                    "color": "info"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Divider"
+          },
+          {
+            "type": "Col",
+            "gap": 2,
+            "children": [
+              {
+                "type": "Text",
+                "value": "Backend",
+                "size": "sm",
+                "weight": "semibold",
+                "color": "secondary"
+              },
+              {
+                "type": "Row",
+                "wrap": "wrap",
+                "gap": 1.5,
+                "children": [
+                  {
+                    "type": "Badge",
+                    "key": "be-0",
+                    "label": "Node.js",
+                    "color": "success"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "be-1",
+                    "label": "Express",
+                    "color": "success"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "be-2",
+                    "label": "PostgreSQL",
+                    "color": "success"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "be-3",
+                    "label": "Prisma",
+                    "color": "success"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "be-4",
+                    "label": "GraphQL",
+                    "color": "success"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Divider"
+          },
+          {
+            "type": "Col",
+            "gap": 2,
+            "children": [
+              {
+                "type": "Text",
+                "value": "DevOps",
+                "size": "sm",
+                "weight": "semibold",
+                "color": "secondary"
+              },
+              {
+                "type": "Row",
+                "wrap": "wrap",
+                "gap": 1.5,
+                "children": [
+                  {
+                    "type": "Badge",
+                    "key": "do-0",
+                    "label": "Docker",
+                    "color": "warning"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "do-1",
+                    "label": "Kubernetes",
+                    "color": "warning"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "do-2",
+                    "label": "GitHub Actions",
+                    "color": "warning"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "do-3",
+                    "label": "AWS",
+                    "color": "warning"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": "do-4",
+                    "label": "Terraform",
+                    "color": "warning"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6IjJjNGQ3OTM0LTc2NjQtNGU2OS1iZjNhLTRhNzEyMWZhZjU5YSIsIm5hbWUiOiJUZWNoIFN0YWNrIENhcmQiLCJ2aWV3IjoiPENhcmQgc2l6ZT1cIm1kXCIgYmFja2dyb3VuZD1cInN1cmZhY2UtZWxldmF0ZWRcIj5cbiAgPENvbCBnYXA9ezN9PlxuICAgIDxSb3cgZ2FwPXsyfSBhbGlnbj1cImNlbnRlclwiPlxuICAgICAgPEljb24gbmFtZT17aWNvbn0gc2l6ZT1cIjJ4bFwiIGNvbG9yPVwicHJpbWFyeVwiIC8-XG4gICAgICA8VGl0bGUgdmFsdWU9e3RpdGxlfSBzaXplPVwieGxcIiB3ZWlnaHQ9XCJib2xkXCIgLz5cbiAgICA8L1Jvdz5cblxuICAgIDxEaXZpZGVyIC8-XG5cbiAgICA8Q29sIGdhcD17Mn0-XG4gICAgICA8VGV4dCB2YWx1ZT1cIkZyb250ZW5kXCIgc2l6ZT1cInNtXCIgd2VpZ2h0PVwic2VtaWJvbGRcIiBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG4gICAgICA8Um93IHdyYXA9XCJ3cmFwXCIgZ2FwPXsxLjV9PlxuICAgICAgICB7ZnJvbnRlbmQubWFwKCh0LCBpZHgpID0-IChcbiAgICAgICAgICA8QmFkZ2Uga2V5PXtgZmUtJHtpZHh9YH0gbGFiZWw9e3R9IGNvbG9yPVwiaW5mb1wiIC8-XG4gICAgICAgICkpfVxuICAgICAgPC9Sb3c-XG4gICAgPC9Db2w-XG5cbiAgICA8RGl2aWRlciAvPlxuXG4gICAgPENvbCBnYXA9ezJ9PlxuICAgICAgPFRleHQgdmFsdWU9XCJCYWNrZW5kXCIgc2l6ZT1cInNtXCIgd2VpZ2h0PVwic2VtaWJvbGRcIiBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG4gICAgICA8Um93IHdyYXA9XCJ3cmFwXCIgZ2FwPXsxLjV9PlxuICAgICAgICB7YmFja2VuZC5tYXAoKHQsIGlkeCkgPT4gKFxuICAgICAgICAgIDxCYWRnZSBrZXk9e2BiZS0ke2lkeH1gfSBsYWJlbD17dH0gY29sb3I9XCJzdWNjZXNzXCIgLz5cbiAgICAgICAgKSl9XG4gICAgICA8L1Jvdz5cbiAgICA8L0NvbD5cblxuICAgIDxEaXZpZGVyIC8-XG5cbiAgICA8Q29sIGdhcD17Mn0-XG4gICAgICA8VGV4dCB2YWx1ZT1cIkRldk9wc1wiIHNpemU9XCJzbVwiIHdlaWdodD1cInNlbWlib2xkXCIgY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuICAgICAgPFJvdyB3cmFwPVwid3JhcFwiIGdhcD17MS41fT5cbiAgICAgICAge2Rldm9wcy5tYXAoKHQsIGlkeCkgPT4gKFxuICAgICAgICAgIDxCYWRnZSBrZXk9e2Bkby0ke2lkeH1gfSBsYWJlbD17dH0gY29sb3I9XCJ3YXJuaW5nXCIgLz5cbiAgICAgICAgKSl9XG4gICAgICA8L1Jvdz5cbiAgICA8L0NvbD5cbiAgPC9Db2w-XG48L0NhcmQ-IiwiZGVmYXVsdFN0YXRlIjp7InRpdGxlIjoiVGVjaCBTdGFjayIsImljb24iOiJzcXVhcmUtY29kZSIsImZyb250ZW5kIjpbIlJlYWN0IiwiVHlwZVNjcmlwdCIsIk5leHQuanMiLCJUYWlsd2luZCBDU1MiLCJWaXRlIl0sImJhY2tlbmQiOlsiTm9kZS5qcyIsIkV4cHJlc3MiLCJQb3N0Z3JlU1FMIiwiUHJpc21hIiwiR3JhcGhRTCJdLCJkZXZvcHMiOlsiRG9ja2VyIiwiS3ViZXJuZXRlcyIsIkdpdEh1YiBBY3Rpb25zIiwiQVdTIiwiVGVycmFmb3JtIl19LCJzdGF0ZXMiOltdLCJzY2hlbWEiOiJpbXBvcnQgeyB6IH0gZnJvbSBcInpvZFwiXG5cbmNvbnN0IEljb25OYW1lID0gei5lbnVtKFtcbiAgXCJhbmFseXRpY3NcIixcbiAgXCJhdG9tXCIsXG4gIFwiYm9sdFwiLFxuICBcImJvb2stb3BlblwiLFxuICBcImJvb2stY2xvc2VkXCIsXG4gIFwiY2FsZW5kYXJcIixcbiAgXCJjaGFydFwiLFxuICBcImNoZWNrXCIsXG4gIFwiY2hlY2stY2lyY2xlXCIsXG4gIFwiY2hlY2stY2lyY2xlLWZpbGxlZFwiLFxuICBcImNoZXZyb24tbGVmdFwiLFxuICBcImNoZXZyb24tcmlnaHRcIixcbiAgXCJjaXJjbGUtcXVlc3Rpb25cIixcbiAgXCJjb21wYXNzXCIsXG4gIFwiY3ViZVwiLFxuICBcImRvY3VtZW50XCIsXG4gIFwiZG90cy1ob3Jpem9udGFsXCIsXG4gIFwiZW1wdHktY2lyY2xlXCIsXG4gIFwiZ2xvYmVcIixcbiAgXCJrZXlzXCIsXG4gIFwibGFiXCIsXG4gIFwiaW1hZ2VzXCIsXG4gIFwiaW5mb1wiLFxuICBcImxpZmVzYXZlclwiLFxuICBcImxpZ2h0YnVsYlwiLFxuICBcIm1haWxcIixcbiAgXCJtYXAtcGluXCIsXG4gIFwibWFwc1wiLFxuICBcIm5hbWVcIixcbiAgXCJub3RlYm9va1wiLFxuICBcIm5vdGVib29rLXBlbmNpbFwiLFxuICBcInBhZ2UtYmxhbmtcIixcbiAgXCJwaG9uZVwiLFxuICBcInBsdXNcIixcbiAgXCJwcm9maWxlXCIsXG4gIFwicHJvZmlsZS1jYXJkXCIsXG4gIFwic3RhclwiLFxuICBcInN0YXItZmlsbGVkXCIsXG4gIFwic2VhcmNoXCIsXG4gIFwic3BhcmtsZVwiLFxuICBcInNwYXJrbGUtZG91YmxlXCIsXG4gIFwic3F1YXJlLWNvZGVcIixcbiAgXCJzcXVhcmUtaW1hZ2VcIixcbiAgXCJzcXVhcmUtdGV4dFwiLFxuICBcInN1aXRjYXNlXCIsXG4gIFwic2V0dGluZ3Mtc2xpZGVyXCIsXG4gIFwidXNlclwiLFxuICBcIndyaXRlXCIsXG4gIFwid3JpdGUtYWx0XCIsXG4gIFwid3JpdGUtYWx0MlwiLFxuICBcInJlbG9hZFwiLFxuICBcInBsYXlcIixcbiAgXCJtb2JpbGVcIixcbiAgXCJkZXNrdG9wXCIsXG4gIFwiZXh0ZXJuYWwtbGlua1wiLFxuXSlcblxuY29uc3QgV2lkZ2V0U3RhdGUgPSB6LnN0cmljdE9iamVjdCh7XG4gIHRpdGxlOiB6LnN0cmluZygpLFxuICBpY29uOiBJY29uTmFtZSxcbiAgZnJvbnRlbmQ6IHouYXJyYXkoei5zdHJpbmcoKSksXG4gIGJhY2tlbmQ6IHouYXJyYXkoei5zdHJpbmcoKSksXG4gIGRldm9wczogei5hcnJheSh6LnN0cmluZygpKSxcbn0pXG5cbmV4cG9ydCBkZWZhdWx0IFdpZGdldFN0YXRlIiwianNvblNjaGVtYSI6e30sInNjaGVtYU1vZGUiOiJ6b2QiLCJzY2hlbWFWYWxpZGl0eSI6InZhbGlkIiwidmlld1ZhbGlkaXR5IjoidmFsaWQiLCJkZWZhdWx0U3RhdGVWYWxpZGl0eSI6InZhbGlkIn0"
+}

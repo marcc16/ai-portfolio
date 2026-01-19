@@ -1,12 +1,8 @@
 "use client";
 
-import { Bar, BarChart, LabelList, XAxis, YAxis } from "recharts";
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
+import { AnimatedList } from "@/components/ui/animated-list";
+import { Brain, Database, Globe, Layers, Server, Terminal, Wrench } from "lucide-react";
 
 interface Skill {
   name: string | null;
@@ -21,135 +17,97 @@ interface SkillsChartProps {
   skills: Skill[];
 }
 
+const Notification = ({ name, description, icon: Icon, color, time }: any) => {
+  return (
+    <figure
+      className={cn(
+        "relative mx-auto min-h-fit w-full max-w-[400px] cursor-pointer overflow-hidden rounded-2xl p-4",
+        // animation styles
+        "transition-all duration-200 ease-in-out hover:scale-[103%]",
+        // light styles
+        "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
+        // dark styles
+        "transform-gpu dark:bg-transparent dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)]"
+      )}
+    >
+      <div className="flex flex-row items-center gap-3">
+        <div
+          className="flex size-10 items-center justify-center rounded-2xl"
+          style={{
+            backgroundColor: color,
+          }}
+        >
+          <Icon className="text-white h-5 w-5" />
+        </div>
+        <div className="flex flex-col overflow-hidden">
+          <figcaption className="flex flex-row items-center text-lg font-medium whitespace-pre dark:text-white">
+            <span className="text-sm sm:text-lg">{name}</span>
+            <span className="mx-1 ms-1">·</span>
+            <span className="text-xs text-gray-500">{time}</span>
+          </figcaption>
+          <p className="text-sm font-normal dark:text-white/60 line-clamp-1">
+            {description}
+          </p>
+        </div>
+      </div>
+    </figure>
+  );
+};
+
 export function SkillsChart({ skills }: SkillsChartProps) {
-  if (!skills || skills.length === 0) {
-    return null;
-  }
-
-  // Group skills by category dynamically
+  // Data processing
+  const coreSkills = skills?.filter(s => (s.percentage || 0) >= 60) || [];
   const groupedSkills = new Map<string, Skill[]>();
-
-  for (const skill of skills) {
+  for (const skill of coreSkills) {
     const category = skill.category || "other";
     const existing = groupedSkills.get(category) || [];
     groupedSkills.set(category, [...existing, skill]);
   }
 
+  const categoryOrder = ["ai", "backend", "frontend", "automation", "tools", "cloud"];
+
+  const categoryConfig: Record<string, { icon: any, color: string, label: string }> = {
+    ai: { icon: Brain, color: "#7c3aed", label: "Artificial Intelligence" },
+    backend: { icon: Server, color: "#3b82f6", label: "Backend Engineering" },
+    frontend: { icon: Globe, color: "#10b981", label: "Frontend Development" },
+    automation: { icon: Layers, color: "#f59e0b", label: "Automation Workflows" },
+    tools: { icon: Wrench, color: "#f97316", label: "Dev Tools" },
+    cloud: { icon: Database, color: "#06b6d4", label: "Cloud Infrastructure" },
+    other: { icon: Terminal, color: "#64748b", label: "Stack Tecnológico" }
+  };
+
+  const notificationData = Array.from(groupedSkills.entries())
+    .sort((a, b) => {
+      const idxA = categoryOrder.indexOf(a[0].toLowerCase());
+      const idxB = categoryOrder.indexOf(b[0].toLowerCase());
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a[0].localeCompare(b[0]);
+    })
+    .map(([category, categorySkills]) => {
+      const config = categoryConfig[category.toLowerCase()] || categoryConfig.other;
+      const skillNames = categorySkills.slice(0, 5).map(s => s.name).join(", ");
+      const totalExp = Math.max(...categorySkills.map(s => s.yearsOfExperience || 0));
+
+      return {
+        name: config.label,
+        description: skillNames,
+        icon: config.icon,
+        color: config.color,
+        time: `${totalExp}+y`
+      };
+    });
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {Array.from(groupedSkills.entries()).map(([category, categorySkills]) => {
-        if (!categorySkills || categorySkills.length === 0) return null;
+    <div className="relative flex max-h-[400px] min-h-[400px] w-full flex-col overflow-hidden p-2">
+      <AnimatedList delay={1500}>
+        {notificationData.map((item, idx) => (
+          <Notification key={idx} {...item} />
+        ))}
+      </AnimatedList>
 
-        // Format category for display
-        const displayLabel = category
-          .split("-")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ");
-
-        // Color mapping based on category
-        const getCategoryColor = (cat: string) => {
-          const normalized = cat.toLowerCase();
-          if (normalized.includes("ai") || normalized.includes("ml") || normalized.includes("data")) return "#8B5CF6"; // Violet
-          if (normalized.includes("backend") || normalized.includes("api")) return "#3B82F6"; // Blue
-          if (normalized.includes("frontend") || normalized.includes("web") || normalized.includes("design")) return "#10B981"; // Emerald
-          if (normalized.includes("cloud") || normalized.includes("devops")) return "#06B6D4"; // Cyan
-          if (normalized.includes("database")) return "#6366F1"; // Indigo
-          if (normalized.includes("tools")) return "#F97316"; // Orange
-          if (normalized.includes("soft")) return "#EC4899"; // Pink
-          return "#64748B"; // Slate default
-        };
-
-        const defaultCategoryColor = getCategoryColor(category);
-
-        // Prepare chart data and config
-        const chartData = categorySkills.map((skill) => ({
-          name: skill.name || "Unknown",
-          proficiency: skill.percentage || 0,
-          fill: skill.color || defaultCategoryColor,
-        }));
-
-        const chartConfig = {
-          proficiency: {
-            label: "Proficiency",
-            color: "hsl(var(--primary))",
-          },
-          default: {
-            color: defaultCategoryColor,
-          },
-        } satisfies ChartConfig;
-
-        // Calculate dynamic height based on number of skills
-        const chartHeight = Math.max(140, categorySkills.length * 32);
-
-        return (
-          <div
-            key={category}
-            className="group rounded-xl border bg-card overflow-hidden transition-all hover:shadow-lg hover:border-primary/50"
-          >
-            {/* Category Header */}
-            <div className="border-b bg-muted/50 px-4 py-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">{displayLabel}</h3>
-                <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary font-medium">
-                  {categorySkills.length}
-                </span>
-              </div>
-            </div>
-
-            {/* Chart */}
-            <div className="p-4">
-              <ChartContainer
-                id={`skills-chart-${category}`}
-                config={chartConfig}
-                className="w-full"
-                style={{ height: `${chartHeight}px` }}
-              >
-                <BarChart
-                  accessibilityLayer
-                  data={chartData}
-                  layout="vertical"
-                  margin={{
-                    left: 0,
-                    right: 28,
-                    top: 5,
-                    bottom: 5,
-                  }}
-                >
-                  <XAxis type="number" hide domain={[0, 100]} />
-                  <YAxis
-                    dataKey="name"
-                    type="category"
-                    tickLine={false}
-                    tickMargin={8}
-                    axisLine={false}
-                    width={85}
-                    className="text-xs"
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={
-                      <ChartTooltipContent
-                        indicator="line"
-                        nameKey="proficiency"
-                        labelFormatter={(value) => value}
-                      />
-                    }
-                  />
-                  <Bar dataKey="proficiency" radius={[0, 6, 6, 0]} barSize={18}>
-                    <LabelList
-                      dataKey="proficiency"
-                      position="right"
-                      offset={4}
-                      className="fill-foreground text-[10px] font-medium"
-                      formatter={(value: number) => `${value}%`}
-                    />
-                  </Bar>
-                </BarChart>
-              </ChartContainer>
-            </div>
-          </div>
-        );
-      })}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-zinc-950/30 to-transparent" />
     </div>
   );
 }

@@ -1,0 +1,442 @@
+{
+  "version": "1.0",
+  "name": "Professional Experience",
+  "template": "{\"type\":\"ListView\",\"children\":[{%- set _c -%}{%-for item in items -%},{\"type\":\"ListViewItem\",\"key\":{{ (item.id) | tojson }},\"gap\":3,\"onClickAction\":{\"type\":\"view_experience\",\"payload\":{\"id\":{{ (item.id) | tojson }}}},\"children\":[{\"type\":\"Box\",\"size\":56,\"radius\":\"md\",\"background\":\"alpha-10\",\"align\":\"center\",\"justify\":\"center\",\"children\":[{%- set _c -%}{%-if item.logo -%},{\"type\":\"Image\",\"src\":{{ (item.logo) | tojson }},\"size\":40,\"fit\":\"contain\",\"frame\":true,\"alt\":{{ ((item.company ~ \" logo\")) | tojson }}}{%-else-%},{\"type\":\"Icon\",\"name\":\"suitcase\",\"size\":\"xl\",\"color\":\"secondary\"}{%-endif-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]},{\"type\":\"Col\",\"gap\":1,\"flex\":\"auto\",\"children\":[{\"type\":\"Row\",\"children\":[{%- set _c -%},{\"type\":\"Text\",\"value\":{{ (item.title) | tojson }},\"size\":\"md\",\"weight\":\"semibold\"},{\"type\":\"Spacer\"}{%-if item.isCurrent -%},{\"type\":\"Badge\",\"label\":\"Current\",\"color\":\"success\",\"variant\":\"soft\",\"size\":\"sm\"}{%-else-%}{%-endif-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]},{\"type\":\"Text\",\"value\":{{ (item.company) | tojson }},\"size\":\"sm\",\"color\":\"secondary\"},{\"type\":\"Row\",\"gap\":3,\"children\":[{\"type\":\"Row\",\"gap\":1,\"children\":[{\"type\":\"Icon\",\"name\":\"calendar\",\"size\":\"sm\",\"color\":\"secondary\"},{\"type\":\"Caption\",\"value\":{{ (item.dateRange) | tojson }},\"color\":\"secondary\"}]},{\"type\":\"Row\",\"gap\":1,\"children\":[{\"type\":\"Icon\",\"name\":\"map-pin\",\"size\":\"sm\",\"color\":\"secondary\"},{\"type\":\"Caption\",\"value\":{{ (item.location) | tojson }},\"color\":\"secondary\"}]}]},{\"type\":\"Row\",\"gap\":1,\"children\":[{%- set _c -%}{%-for tech in item.stack -%}{%-set idx = loop.index0 -%},{\"type\":\"Badge\",\"key\":{{ (idx) | tojson }},\"label\":{{ (tech) | tojson }},\"variant\":\"outline\",\"size\":\"sm\"}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "company": {
+              "type": "string"
+            },
+            "logo": {
+              "type": "string"
+            },
+            "dateRange": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "isCurrent": {
+              "type": "boolean"
+            },
+            "stack": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "company",
+            "dateRange",
+            "location",
+            "isCurrent",
+            "stack"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "ListView",
+    "children": [
+      {
+        "type": "ListViewItem",
+        "key": "exp-1",
+        "gap": 3,
+        "onClickAction": {
+          "type": "view_experience",
+          "payload": {
+            "id": "exp-1"
+          }
+        },
+        "children": [
+          {
+            "type": "Box",
+            "size": 56,
+            "radius": "md",
+            "background": "alpha-10",
+            "align": "center",
+            "justify": "center",
+            "children": [
+              {
+                "type": "Icon",
+                "name": "suitcase",
+                "size": "xl",
+                "color": "secondary"
+              }
+            ]
+          },
+          {
+            "type": "Col",
+            "gap": 1,
+            "flex": "auto",
+            "children": [
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Senior Software Engineer",
+                    "size": "md",
+                    "weight": "semibold"
+                  },
+                  {
+                    "type": "Spacer"
+                  },
+                  {
+                    "type": "Badge",
+                    "label": "Current",
+                    "color": "success",
+                    "variant": "soft",
+                    "size": "sm"
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "value": "Acme Corp",
+                "size": "sm",
+                "color": "secondary"
+              },
+              {
+                "type": "Row",
+                "gap": 3,
+                "children": [
+                  {
+                    "type": "Row",
+                    "gap": 1,
+                    "children": [
+                      {
+                        "type": "Icon",
+                        "name": "calendar",
+                        "size": "sm",
+                        "color": "secondary"
+                      },
+                      {
+                        "type": "Caption",
+                        "value": "2023 - Present",
+                        "color": "secondary"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "gap": 1,
+                    "children": [
+                      {
+                        "type": "Icon",
+                        "name": "map-pin",
+                        "size": "sm",
+                        "color": "secondary"
+                      },
+                      {
+                        "type": "Caption",
+                        "value": "San Francisco, CA",
+                        "color": "secondary"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "gap": 1,
+                "children": [
+                  {
+                    "type": "Badge",
+                    "key": 0,
+                    "label": "TypeScript",
+                    "variant": "outline",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": 1,
+                    "label": "React",
+                    "variant": "outline",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": 2,
+                    "label": "Node.js",
+                    "variant": "outline",
+                    "size": "sm"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ListViewItem",
+        "key": "exp-2",
+        "gap": 3,
+        "onClickAction": {
+          "type": "view_experience",
+          "payload": {
+            "id": "exp-2"
+          }
+        },
+        "children": [
+          {
+            "type": "Box",
+            "size": 56,
+            "radius": "md",
+            "background": "alpha-10",
+            "align": "center",
+            "justify": "center",
+            "children": [
+              {
+                "type": "Icon",
+                "name": "suitcase",
+                "size": "xl",
+                "color": "secondary"
+              }
+            ]
+          },
+          {
+            "type": "Col",
+            "gap": 1,
+            "flex": "auto",
+            "children": [
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Product Manager",
+                    "size": "md",
+                    "weight": "semibold"
+                  },
+                  {
+                    "type": "Spacer"
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "value": "Globex",
+                "size": "sm",
+                "color": "secondary"
+              },
+              {
+                "type": "Row",
+                "gap": 3,
+                "children": [
+                  {
+                    "type": "Row",
+                    "gap": 1,
+                    "children": [
+                      {
+                        "type": "Icon",
+                        "name": "calendar",
+                        "size": "sm",
+                        "color": "secondary"
+                      },
+                      {
+                        "type": "Caption",
+                        "value": "2020 - 2023",
+                        "color": "secondary"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "gap": 1,
+                    "children": [
+                      {
+                        "type": "Icon",
+                        "name": "map-pin",
+                        "size": "sm",
+                        "color": "secondary"
+                      },
+                      {
+                        "type": "Caption",
+                        "value": "New York, NY",
+                        "color": "secondary"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "gap": 1,
+                "children": [
+                  {
+                    "type": "Badge",
+                    "key": 0,
+                    "label": "Jira",
+                    "variant": "outline",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": 1,
+                    "label": "Figma",
+                    "variant": "outline",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": 2,
+                    "label": "SQL",
+                    "variant": "outline",
+                    "size": "sm"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ListViewItem",
+        "key": "exp-3",
+        "gap": 3,
+        "onClickAction": {
+          "type": "view_experience",
+          "payload": {
+            "id": "exp-3"
+          }
+        },
+        "children": [
+          {
+            "type": "Box",
+            "size": 56,
+            "radius": "md",
+            "background": "alpha-10",
+            "align": "center",
+            "justify": "center",
+            "children": [
+              {
+                "type": "Icon",
+                "name": "suitcase",
+                "size": "xl",
+                "color": "secondary"
+              }
+            ]
+          },
+          {
+            "type": "Col",
+            "gap": 1,
+            "flex": "auto",
+            "children": [
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Software Engineering Intern",
+                    "size": "md",
+                    "weight": "semibold"
+                  },
+                  {
+                    "type": "Spacer"
+                  }
+                ]
+              },
+              {
+                "type": "Text",
+                "value": "Initech",
+                "size": "sm",
+                "color": "secondary"
+              },
+              {
+                "type": "Row",
+                "gap": 3,
+                "children": [
+                  {
+                    "type": "Row",
+                    "gap": 1,
+                    "children": [
+                      {
+                        "type": "Icon",
+                        "name": "calendar",
+                        "size": "sm",
+                        "color": "secondary"
+                      },
+                      {
+                        "type": "Caption",
+                        "value": "2019 - 2020",
+                        "color": "secondary"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "gap": 1,
+                    "children": [
+                      {
+                        "type": "Icon",
+                        "name": "map-pin",
+                        "size": "sm",
+                        "color": "secondary"
+                      },
+                      {
+                        "type": "Caption",
+                        "value": "Remote",
+                        "color": "secondary"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "gap": 1,
+                "children": [
+                  {
+                    "type": "Badge",
+                    "key": 0,
+                    "label": "Python",
+                    "variant": "outline",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": 1,
+                    "label": "Django",
+                    "variant": "outline",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Badge",
+                    "key": 2,
+                    "label": "PostgreSQL",
+                    "variant": "outline",
+                    "size": "sm"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6IjQyMTAxZWY1LTU3Y2EtNGY2NC05YzVlLTc0ZGU1YTc5NTI5MCIsIm5hbWUiOiJQcm9mZXNzaW9uYWwgRXhwZXJpZW5jZSIsInZpZXciOiI8TGlzdFZpZXc-XG4gIHtpdGVtcy5tYXAoKGl0ZW0pID0-IChcbiAgICA8TGlzdFZpZXdJdGVtXG4gICAgICBrZXk9e2l0ZW0uaWR9XG4gICAgICBnYXA9ezN9XG4gICAgICBvbkNsaWNrQWN0aW9uPXt7IHR5cGU6IFwidmlld19leHBlcmllbmNlXCIsIHBheWxvYWQ6IHsgaWQ6IGl0ZW0uaWQgfSB9fVxuICAgID5cbiAgICAgIDxCb3hcbiAgICAgICAgc2l6ZT17NTZ9XG4gICAgICAgIHJhZGl1cz1cIm1kXCJcbiAgICAgICAgYmFja2dyb3VuZD1cImFscGhhLTEwXCJcbiAgICAgICAgYWxpZ249XCJjZW50ZXJcIlxuICAgICAgICBqdXN0aWZ5PVwiY2VudGVyXCJcbiAgICAgID5cbiAgICAgICAge2l0ZW0ubG9nbyA_IChcbiAgICAgICAgICA8SW1hZ2VcbiAgICAgICAgICAgIHNyYz17aXRlbS5sb2dvfVxuICAgICAgICAgICAgc2l6ZT17NDB9XG4gICAgICAgICAgICBmaXQ9XCJjb250YWluXCJcbiAgICAgICAgICAgIGZyYW1lXG4gICAgICAgICAgICBhbHQ9e2Ake2l0ZW0uY29tcGFueX0gbG9nb2B9XG4gICAgICAgICAgLz5cbiAgICAgICAgKSA6IChcbiAgICAgICAgICA8SWNvbiBuYW1lPVwic3VpdGNhc2VcIiBzaXplPVwieGxcIiBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG4gICAgICAgICl9XG4gICAgICA8L0JveD5cblxuICAgICAgPENvbCBnYXA9ezF9IGZsZXg9XCJhdXRvXCI-XG4gICAgICAgIDxSb3c-XG4gICAgICAgICAgPFRleHQgdmFsdWU9e2l0ZW0udGl0bGV9IHNpemU9XCJtZFwiIHdlaWdodD1cInNlbWlib2xkXCIgLz5cbiAgICAgICAgICA8U3BhY2VyIC8-XG4gICAgICAgICAge2l0ZW0uaXNDdXJyZW50ID8gKFxuICAgICAgICAgICAgPEJhZGdlIGxhYmVsPVwiQ3VycmVudFwiIGNvbG9yPVwic3VjY2Vzc1wiIHZhcmlhbnQ9XCJzb2Z0XCIgc2l6ZT1cInNtXCIgLz5cbiAgICAgICAgICApIDogbnVsbH1cbiAgICAgICAgPC9Sb3c-XG5cbiAgICAgICAgPFRleHQgdmFsdWU9e2l0ZW0uY29tcGFueX0gc2l6ZT1cInNtXCIgY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuXG4gICAgICAgIDxSb3cgZ2FwPXszfT5cbiAgICAgICAgICA8Um93IGdhcD17MX0-XG4gICAgICAgICAgICA8SWNvbiBuYW1lPVwiY2FsZW5kYXJcIiBzaXplPVwic21cIiBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG4gICAgICAgICAgICA8Q2FwdGlvbiB2YWx1ZT17aXRlbS5kYXRlUmFuZ2V9IGNvbG9yPVwic2Vjb25kYXJ5XCIgLz5cbiAgICAgICAgICA8L1Jvdz5cbiAgICAgICAgICA8Um93IGdhcD17MX0-XG4gICAgICAgICAgICA8SWNvbiBuYW1lPVwibWFwLXBpblwiIHNpemU9XCJzbVwiIGNvbG9yPVwic2Vjb25kYXJ5XCIgLz5cbiAgICAgICAgICAgIDxDYXB0aW9uIHZhbHVlPXtpdGVtLmxvY2F0aW9ufSBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG4gICAgICAgICAgPC9Sb3c-XG4gICAgICAgIDwvUm93PlxuXG4gICAgICAgIDxSb3cgZ2FwPXsxfT5cbiAgICAgICAgICB7aXRlbS5zdGFjay5tYXAoKHRlY2gsIGlkeCkgPT4gKFxuICAgICAgICAgICAgPEJhZGdlIGtleT17aWR4fSBsYWJlbD17dGVjaH0gdmFyaWFudD1cIm91dGxpbmVcIiBzaXplPVwic21cIiAvPlxuICAgICAgICAgICkpfVxuICAgICAgICA8L1Jvdz5cbiAgICAgIDwvQ29sPlxuICAgIDwvTGlzdFZpZXdJdGVtPlxuICApKX1cbjwvTGlzdFZpZXc-IiwiZGVmYXVsdFN0YXRlIjp7Iml0ZW1zIjpbeyJpZCI6ImV4cC0xIiwidGl0bGUiOiJTZW5pb3IgU29mdHdhcmUgRW5naW5lZXIiLCJjb21wYW55IjoiQWNtZSBDb3JwIiwibG9nbyI6IiIsImRhdGVSYW5nZSI6IjIwMjMgLSBQcmVzZW50IiwibG9jYXRpb24iOiJTYW4gRnJhbmNpc2NvLCBDQSIsImlzQ3VycmVudCI6dHJ1ZSwic3RhY2siOlsiVHlwZVNjcmlwdCIsIlJlYWN0IiwiTm9kZS5qcyJdfSx7ImlkIjoiZXhwLTIiLCJ0aXRsZSI6IlByb2R1Y3QgTWFuYWdlciIsImNvbXBhbnkiOiJHbG9iZXgiLCJsb2dvIjoiIiwiZGF0ZVJhbmdlIjoiMjAyMCAtIDIwMjMiLCJsb2NhdGlvbiI6Ik5ldyBZb3JrLCBOWSIsImlzQ3VycmVudCI6ZmFsc2UsInN0YWNrIjpbIkppcmEiLCJGaWdtYSIsIlNRTCJdfSx7ImlkIjoiZXhwLTMiLCJ0aXRsZSI6IlNvZnR3YXJlIEVuZ2luZWVyaW5nIEludGVybiIsImNvbXBhbnkiOiJJbml0ZWNoIiwibG9nbyI6IiIsImRhdGVSYW5nZSI6IjIwMTkgLSAyMDIwIiwibG9jYXRpb24iOiJSZW1vdGUiLCJpc0N1cnJlbnQiOmZhbHNlLCJzdGFjayI6WyJQeXRob24iLCJEamFuZ28iLCJQb3N0Z3JlU1FMIl19XX0sInN0YXRlcyI6W10sInNjaGVtYSI6ImltcG9ydCB7IHogfSBmcm9tIFwiem9kXCJcblxuY29uc3QgRXhwZXJpZW5jZSA9IHouc3RyaWN0T2JqZWN0KHtcbiAgaWQ6IHouc3RyaW5nKCksXG4gIHRpdGxlOiB6LnN0cmluZygpLFxuICBjb21wYW55OiB6LnN0cmluZygpLFxuICBsb2dvOiB6LnN0cmluZygpLm9wdGlvbmFsKCksXG4gIGRhdGVSYW5nZTogei5zdHJpbmcoKSxcbiAgbG9jYXRpb246IHouc3RyaW5nKCksXG4gIGlzQ3VycmVudDogei5ib29sZWFuKCksXG4gIHN0YWNrOiB6LmFycmF5KHouc3RyaW5nKCkpLFxufSlcblxuY29uc3QgV2lkZ2V0U3RhdGUgPSB6LnN0cmljdE9iamVjdCh7XG4gIGl0ZW1zOiB6LmFycmF5KEV4cGVyaWVuY2UpLFxufSlcblxuZXhwb3J0IGRlZmF1bHQgV2lkZ2V0U3RhdGUiLCJqc29uU2NoZW1hIjp7fSwic2NoZW1hTW9kZSI6InpvZCIsInNjaGVtYVZhbGlkaXR5IjoidmFsaWQiLCJ2aWV3VmFsaWRpdHkiOiJ2YWxpZCIsImRlZmF1bHRTdGF0ZVZhbGlkaXR5IjoidmFsaWQifQ"
+}

@@ -101,7 +101,7 @@ export function BillingModal({ open, onOpenChange }: BillingModalProps) {
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <Check className="h-4 w-4 text-primary" />
-                  <span>20 mensajes diarios</span>
+                  <span>10 mensajes diarios</span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
                   <Check className="h-4 w-4 text-primary" />

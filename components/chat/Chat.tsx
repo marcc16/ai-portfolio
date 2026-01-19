@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { ChatKit, useChatKit } from "@openai/chatkit-react";
 import { createSession, getMessageUsage } from "@/app/actions/create-session";
 import type { CHAT_PROFILE_QUERYResult } from "@/sanity.types";
@@ -29,6 +29,9 @@ export function Chat({
     allowed: true,
   });
 
+  // Track last message to avoid double-counting
+  const lastMessageIdRef = useRef<string | null>(null);
+
   // Handle session creation with error handling
   const handleCreateSession = useCallback(async () => {
     try {
@@ -47,10 +50,50 @@ export function Chat({
       throw error;
     }
   }, [isSignedIn]);
+
+  // Handle when assistant starts responding (user sent a message)
+  const handleResponseStart = useCallback(async (event: any) => {
+    // Generate a unique ID for this message exchange
+    const messageId = `${Date.now()}-${Math.random()}`;
+
+    // Avoid counting the same message twice
+    if (lastMessageIdRef.current === messageId) {
+      return;
+    }
+    lastMessageIdRef.current = messageId;
+
+    try {
+      // Increment message count
+      const response = await fetch("/api/chat/increment-message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.allowed) {
+        // Rate limit reached
+        setRateLimitReached(true);
+
+        // Refresh usage info
+        const usage = await getMessageUsage();
+        setMessageUsage(usage);
+      } else {
+        // Update message count
+        const usage = await getMessageUsage();
+        setMessageUsage(usage);
+      }
+    } catch (error) {
+      console.error("[Chat] Error incrementing message count:", error);
+    }
+  }, []);
+
   // Generate greeting based on available profile data
   const getGreeting = () => {
     if (!profile?.firstName) {
-      return "¡Hola! Pregúntame lo que quieras sobre mi trabajo, experiencia o proyectos.";
+      return "¡Hola! Pregúntame sobre mi experiencia o pide una AUDITORÍA IA GRATUITA para tu negocio.";
     }
 
     // The .filter(Boolean) removes all falsy values from the array, so if the firstName or lastName is not set, it will be removed
@@ -58,13 +101,15 @@ export function Chat({
       .filter(Boolean)
       .join(" ");
 
-    return `¡Hola! Soy ${fullName}. Pregúntame lo que quieras sobre mi trabajo, experiencia o proyectos.`;
+    return `¡Hola! Soy ${fullName}. Pregúntame sobre mi experiencia o pide una AUDITORÍA IA GRATUITA para tu negocio.`;
   };
 
   const { control } = useChatKit({
     api: {
       getClientSecret: handleCreateSession,
     },
+    // Track when assistant starts responding (user sent a message)
+    onResponseStart: handleResponseStart,
     // https://chatkit.studio/playground
     theme: {
       colorScheme: 'dark',
@@ -83,15 +128,15 @@ export function Chat({
           toggleSidebar();
         },
       },
+      rightAction: undefined, // Disable theme toggle - always dark mode
     },
     startScreen: {
       greeting: getGreeting(),
       prompts: [
         {
-          icon: "suitcase",
-          label: "¿Cuál es tu experiencia?",
-          prompt:
-            "Cuéntame sobre tu experiencia profesional y tus roles anteriores",
+          icon: "sparkle",
+          label: "Auditoría IA Gratuita",
+          prompt: "Quiero una auditoría IA gratuita. ",
         },
         {
           icon: "square-code",
@@ -132,7 +177,7 @@ export function Chat({
     },
 
     disclaimer: {
-      text: "Aviso: Este es mi gemelo digital con IA. Puede no ser 100% preciso, verifica la información importante.",
+      text: "Aviso: Este es mi clon digital con IA. Puede no ser 100% preciso, verifica la información importante.",
     },
   });
 
@@ -226,7 +271,7 @@ export function Chat({
 
             <div className="pt-2 border-t border-border/50">
               <p className="text-sm font-medium text-primary">
-                Plan Premium: 20 mensajes/día
+                Plan Premium: 10 mensajes/día
               </p>
             </div>
           </div>

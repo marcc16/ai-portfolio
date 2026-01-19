@@ -39,9 +39,9 @@ export async function ContactSection() {
     <section id="contact" className="py-24 px-6 pb-40 bg-black border-t border-white/5">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white">Get In Touch</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white">Contacto</h2>
           <p className="text-xl text-neutral-400 max-w-2xl mx-auto">
-            Ready to transform your workflow? Let's build something extraordinary together.
+            ¿Listo para transformar tu flujo de trabajo? Construyamos algo extraordinario juntos.
           </p>
         </div>
 
@@ -50,7 +50,7 @@ export async function ContactSection() {
             {/* Contact Info */}
             <div className="@container/info space-y-8 lg:pt-8 w-full max-w-md mx-auto lg:mx-0">
               <h3 className="text-2xl font-semibold mb-8 text-white hidden lg:block">
-                Contact Information
+                Información de Contacto
               </h3>
 
               <div className="space-y-8">

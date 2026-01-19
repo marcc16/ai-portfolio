@@ -1,0 +1,615 @@
+{
+  "experience_card_single": {
+    "description": "Card premium para mostrar UNA experiencia laboral con todos los detalles",
+    "when_to_use": "Usuario pregunta sobre un rol específico o experiencia detallada",
+    "example_prompt": "Cuéntame sobre tu experiencia en TechCorp",
+    "widget": {
+      "type": "card",
+      "size": "lg",
+      "children": [
+        {
+          "type": "row",
+          "gap": 16,
+          "align": "start",
+          "children": [
+            {
+              "type": "image",
+              "src": "https://via.placeholder.com/56x56/3b82f6/ffffff?text=TC",
+              "alt": "TechCorp Logo",
+              "width": "56px",
+              "height": "56px",
+              "radius": "md",
+              "fit": "contain"
+            },
+            {
+              "type": "col",
+              "gap": 8,
+              "flex": 1,
+              "children": [
+                {
+                  "type": "row",
+                  "justify": "between",
+                  "align": "start",
+                  "children": [
+                    {
+                      "type": "col",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "title",
+                          "value": "Senior Full Stack Developer",
+                          "size": "md",
+                          "weight": "semibold"
+                        },
+                        {
+                          "type": "text",
+                          "value": "TechCorp Inc.",
+                          "size": "md",
+                          "color": {
+                            "light": "#64748b",
+                            "dark": "#94a3b8"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Current",
+                      "color": "success",
+                      "variant": "soft",
+                      "pill": true
+                    }
+                  ]
+                },
+                {
+                  "type": "row",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "caption",
+                      "value": "📅 Jan 2023 - Present",
+                      "size": "sm",
+                      "color": {
+                        "light": "#64748b",
+                        "dark": "#94a3b8"
+                      }
+                    },
+                    {
+                      "type": "caption",
+                      "value": "📍 Remote",
+                      "size": "sm",
+                      "color": {
+                        "light": "#64748b",
+                        "dark": "#94a3b8"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "divider",
+                  "spacing": 12
+                },
+                {
+                  "type": "markdown",
+                  "value": "**Key Achievements:**\n• Led migration to microservices architecture\n• Improved API response time by 40%\n• Mentored 5 junior developers\n• Implemented CI/CD pipeline reducing deploy time by 60%"
+                },
+                {
+                  "type": "row",
+                  "gap": 8,
+                  "wrap": "wrap",
+                  "margin": {
+                    "top": 12
+                  },
+                  "children": [
+                    {
+                      "type": "badge",
+                      "label": "React",
+                      "color": "info",
+                      "variant": "outline",
+                      "size": "sm",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Node.js",
+                      "color": "success",
+                      "variant": "outline",
+                      "size": "sm",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "AWS",
+                      "color": "warning",
+                      "variant": "outline",
+                      "size": "sm",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Docker",
+                      "color": "info",
+                      "variant": "outline",
+                      "size": "sm",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "PostgreSQL",
+                      "color": "info",
+                      "variant": "outline",
+                      "size": "sm",
+                      "pill": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "tech_stack_grouped": {
+    "description": "Tech stack agrupado por categorías con badges coloridos",
+    "when_to_use": "Usuario pregunta sobre tecnologías, stack, habilidades técnicas",
+    "example_prompt": "¿Qué tecnologías dominas?",
+    "widget": {
+      "type": "card",
+      "size": "lg",
+      "children": [
+        {
+          "type": "title",
+          "value": "💻 Tech Stack",
+          "size": "lg",
+          "weight": "semibold",
+          "margin": {
+            "bottom": 16
+          }
+        },
+        {
+          "type": "col",
+          "gap": 16,
+          "children": [
+            {
+              "type": "col",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Frontend",
+                  "size": "sm",
+                  "weight": "semibold",
+                  "color": {
+                    "light": "#64748b",
+                    "dark": "#94a3b8"
+                  }
+                },
+                {
+                  "type": "row",
+                  "gap": 8,
+                  "wrap": "wrap",
+                  "children": [
+                    {
+                      "type": "badge",
+                      "label": "React",
+                      "color": "info",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Next.js",
+                      "color": "secondary",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "TypeScript",
+                      "color": "info",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Tailwind CSS",
+                      "color": "info",
+                      "variant": "solid",
+                      "pill": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "col",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Backend",
+                  "size": "sm",
+                  "weight": "semibold",
+                  "color": {
+                    "light": "#64748b",
+                    "dark": "#94a3b8"
+                  }
+                },
+                {
+                  "type": "row",
+                  "gap": 8,
+                  "wrap": "wrap",
+                  "children": [
+                    {
+                      "type": "badge",
+                      "label": "Node.js",
+                      "color": "success",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Python",
+                      "color": "info",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "PostgreSQL",
+                      "color": "info",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Redis",
+                      "color": "danger",
+                      "variant": "solid",
+                      "pill": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "col",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "DevOps & Cloud",
+                  "size": "sm",
+                  "weight": "semibold",
+                  "color": {
+                    "light": "#64748b",
+                    "dark": "#94a3b8"
+                  }
+                },
+                {
+                  "type": "row",
+                  "gap": 8,
+                  "wrap": "wrap",
+                  "children": [
+                    {
+                      "type": "badge",
+                      "label": "AWS",
+                      "color": "warning",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Docker",
+                      "color": "info",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "GitHub Actions",
+                      "color": "secondary",
+                      "variant": "solid",
+                      "pill": true
+                    },
+                    {
+                      "type": "badge",
+                      "label": "Vercel",
+                      "color": "secondary",
+                      "variant": "solid",
+                      "pill": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "project_featured": {
+    "description": "Card de proyecto destacado con imagen, descripción y CTAs",
+    "when_to_use": "Usuario pregunta sobre proyectos o quiere ver portfolio",
+    "example_prompt": "Muéstrame tus proyectos",
+    "widget": {
+      "type": "card",
+      "size": "lg",
+      "children": [
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/800x450/3b82f6/ffffff?text=Project+Screenshot",
+          "alt": "AI Portfolio Builder Screenshot",
+          "width": "100%",
+          "aspectRatio": "16/9",
+          "radius": "md",
+          "fit": "cover",
+          "margin": {
+            "bottom": 16
+          }
+        },
+        {
+          "type": "col",
+          "gap": 12,
+          "children": [
+            {
+              "type": "row",
+              "justify": "between",
+              "align": "start",
+              "children": [
+                {
+                  "type": "title",
+                  "value": "AI Portfolio Builder",
+                  "size": "lg",
+                  "weight": "semibold"
+                },
+                {
+                  "type": "badge",
+                  "label": "Featured",
+                  "color": "warning",
+                  "variant": "soft",
+                  "pill": true
+                }
+              ]
+            },
+            {
+              "type": "caption",
+              "value": "🚀 Web Application",
+              "size": "sm",
+              "color": {
+                "light": "#64748b",
+                "dark": "#94a3b8"
+              }
+            },
+            {
+              "type": "text",
+              "value": "A full-stack platform that helps developers create stunning portfolios using AI. Features real-time collaboration, custom theming, and SEO optimization.",
+              "size": "md"
+            },
+            {
+              "type": "divider",
+              "spacing": 12
+            },
+            {
+              "type": "col",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "🎯 Key Features:",
+                  "size": "sm",
+                  "weight": "semibold"
+                },
+                {
+                  "type": "markdown",
+                  "value": "• AI-powered content generation\n• Real-time preview & editing\n• Custom domain support\n• Analytics dashboard\n• Dark mode included"
+                }
+              ]
+            },
+            {
+              "type": "row",
+              "gap": 8,
+              "wrap": "wrap",
+              "margin": {
+                "top": 12
+              },
+              "children": [
+                {
+                  "type": "badge",
+                  "label": "Next.js",
+                  "variant": "outline",
+                  "size": "sm",
+                  "pill": true
+                },
+                {
+                  "type": "badge",
+                  "label": "OpenAI",
+                  "variant": "outline",
+                  "size": "sm",
+                  "pill": true
+                },
+                {
+                  "type": "badge",
+                  "label": "Sanity CMS",
+                  "variant": "outline",
+                  "size": "sm",
+                  "pill": true
+                },
+                {
+                  "type": "badge",
+                  "label": "Clerk Auth",
+                  "variant": "outline",
+                  "size": "sm",
+                  "pill": true
+                },
+                {
+                  "type": "badge",
+                  "label": "Vercel",
+                  "variant": "outline",
+                  "size": "sm",
+                  "pill": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "experience_list_compact": {
+    "description": "ListView compacto para mostrar múltiples experiencias en lista",
+    "when_to_use": "Usuario pregunta por todo el historial laboral",
+    "example_prompt": "¿Dónde has trabajado?",
+    "widget": {
+      "type": "list_view",
+      "limit": 5,
+      "status": {
+        "text": "5 years of experience",
+        "icon": "briefcase"
+      },
+      "children": [
+        {
+          "type": "list_view_item",
+          "gap": 16,
+          "children": [
+            {
+              "type": "image",
+              "src": "https://via.placeholder.com/40x40/3b82f6/ffffff?text=T",
+              "alt": "TechCorp Logo",
+              "width": "40px",
+              "height": "40px",
+              "radius": "sm"
+            },
+            {
+              "type": "col",
+              "gap": 4,
+              "flex": 1,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Senior Full Stack Developer",
+                  "weight": "semibold",
+                  "size": "md"
+                },
+                {
+                  "type": "caption",
+                  "value": "TechCorp Inc. • 2023 - Present • Remote",
+                  "size": "sm",
+                  "color": {
+                    "light": "#64748b",
+                    "dark": "#94a3b8"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "badge",
+              "label": "Current",
+              "color": "success",
+              "variant": "soft",
+              "size": "sm",
+              "pill": true
+            }
+          ]
+        },
+        {
+          "type": "list_view_item",
+          "gap": 16,
+          "children": [
+            {
+              "type": "image",
+              "src": "https://via.placeholder.com/40x40/10b981/ffffff?text=S",
+              "alt": "StartupXYZ Logo",
+              "width": "40px",
+              "height": "40px",
+              "radius": "sm"
+            },
+            {
+              "type": "col",
+              "gap": 4,
+              "flex": 1,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Full Stack Developer",
+                  "weight": "semibold",
+                  "size": "md"
+                },
+                {
+                  "type": "caption",
+                  "value": "StartupXYZ • 2021 - 2023 • San Francisco",
+                  "size": "sm",
+                  "color": {
+                    "light": "#64748b",
+                    "dark": "#94a3b8"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "icon",
+              "name": "chevron-right",
+              "color": {
+                "light": "#cbd5e1",
+                "dark": "#475569"
+              },
+              "size": "sm"
+            }
+          ]
+        },
+        {
+          "type": "list_view_item",
+          "gap": 16,
+          "children": [
+            {
+              "type": "image",
+              "src": "https://via.placeholder.com/40x40/f59e0b/ffffff?text=E",
+              "alt": "EduTech Logo",
+              "width": "40px",
+              "height": "40px",
+              "radius": "sm"
+            },
+            {
+              "type": "col",
+              "gap": 4,
+              "flex": 1,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Junior Developer",
+                  "weight": "semibold",
+                  "size": "md"
+                },
+                {
+                  "type": "caption",
+                  "value": "EduTech Corp • 2019 - 2021 • New York",
+                  "size": "sm",
+                  "color": {
+                    "light": "#64748b",
+                    "dark": "#94a3b8"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "icon",
+              "name": "chevron-right",
+              "color": {
+                "light": "#cbd5e1",
+                "dark": "#475569"
+              },
+              "size": "sm"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

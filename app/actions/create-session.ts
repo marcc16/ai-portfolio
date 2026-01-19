@@ -43,7 +43,7 @@ async function getUserPlan(userId: string): Promise<"free" | "recruiter"> {
  */
 function getMessageLimit(isGuest: boolean, plan: "free" | "recruiter"): number {
   if (isGuest) return 3;
-  if (plan === "recruiter") return 20;
+  if (plan === "recruiter") return 10; // Changed from 20 to 10
   return 5; // free authenticated users
 }
 
@@ -61,8 +61,33 @@ export async function createSession() {
     identifier = userId;
   } else {
     // For guests, use IP address
-    const { headers } = await import("next/headers");
-    identifier = (await headers()).get("x-forwarded-for") ?? "127.0.0.1";
+    const { headers, cookies } = await import("next/headers");
+    const forwardedFor = (await headers()).get("x-forwarded-for");
+    const realIp = (await headers()).get("x-real-ip");
+
+    // Try to get guest session ID from cookie for consistent tracking
+    const cookieStore = await cookies();
+    let guestId = cookieStore.get("guest_session_id")?.value;
+
+    // If no guest ID, create one and set cookie (will be set by middleware/response)
+    if (!guestId) {
+      guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+      // Note: Can't set cookies here in server action, needs to be done client-side or in middleware
+    }
+
+    // Use guest ID combined with IP for better tracking
+    // This prevents different browser sessions from the same IP from sharing limits
+    const ipAddress = forwardedFor || realIp || "unknown";
+    identifier = `${guestId}:${ipAddress}`;
+
+    // Log for debugging
+    console.log("[create-session] Guest identifier:", {
+      forwardedFor,
+      realIp,
+      guestId,
+      identifier,
+      isDev: process.env.NODE_ENV === "development"
+    });
   }
 
   // Check daily message limit with custom limit
@@ -115,8 +140,17 @@ export async function createSession() {
 
   const data = await response.json();
 
-  // Increment message count after successful session creation
-  await incrementMessageCount(identifier, isGuest, messageLimit);
+  // TODO: Move message counting to actual message send event
+  // Currently this increments the counter when opening the chat, not when sending messages
+  // This causes the "limit reached" message to appear even if no messages were sent
+  //
+  // Solutions:
+  // 1. Use ChatKit webhooks to track when messages are actually sent
+  // 2. Create a separate API endpoint that increments the counter and call it from the client
+  // 3. Use ChatKit's onMessageSent callback if available
+  //
+  // For now, we ONLY check the limit but DO NOT increment it here
+  // await incrementMessageCount(identifier, isGuest, messageLimit);
 
   return data.client_secret as string;
 }
@@ -132,12 +166,25 @@ export async function getMessageUsage() {
   const plan = userId ? await getUserPlan(userId) : "free";
   const messageLimit = getMessageLimit(isGuest, plan);
 
+
   let identifier: string;
   if (userId) {
     identifier = userId;
   } else {
-    const { headers } = await import("next/headers");
-    identifier = (await headers()).get("x-forwarded-for") ?? "127.0.0.1";
+    const { headers, cookies } = await import("next/headers");
+    const forwardedFor = (await headers()).get("x-forwarded-for");
+    const realIp = (await headers()).get("x-real-ip");
+
+    // Try to get guest session ID from cookie
+    const cookieStore = await cookies();
+    let guestId = cookieStore.get("guest_session_id")?.value;
+
+    if (!guestId) {
+      guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+    }
+
+    const ipAddress = forwardedFor || realIp || "unknown";
+    identifier = `${guestId}:${ipAddress}`;
   }
 
   const usage = await hasRemainingMessages(identifier, isGuest, messageLimit);

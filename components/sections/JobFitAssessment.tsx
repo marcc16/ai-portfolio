@@ -1,11 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Loader2, Briefcase, CheckCircle2, AlertTriangle, ArrowRight, Sparkles } from "lucide-react";
+import { Loader2, Briefcase, CheckCircle2, AlertTriangle, ArrowRight, Sparkles, Lock, Crown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { AnimatedCircularProgressBar } from "@/components/ui/animated-circular-progress-bar";
+import { AnalysisCounter } from "./AnalysisCounter";
+import { getJobAnalysisUsage } from "@/app/actions/job-analysis";
+import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { BillingModal } from "@/components/billing/BillingModal";
 
 interface AssessmentResult {
     matchScore: number;
@@ -13,14 +18,46 @@ interface AssessmentResult {
     strengths: string[];
     gaps: string[];
     verdict: "High Match" | "Potential Match" | "Low Match";
+    usage?: {
+        remaining: number;
+        limit: number;
+    };
 }
 
 export function JobFitAssessment() {
+    const { isSignedIn } = useUser();
     const [jobDescription, setJobDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [loadingProgress, setLoadingProgress] = useState(0);
     const [result, setResult] = useState<AssessmentResult | null>(null);
-    const [_, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [rateLimitReached, setRateLimitReached] = useState(false);
+    const [showBillingModal, setShowBillingModal] = useState(false);
+    const [analysisUsage, setAnalysisUsage] = useState<{
+        remaining: number;
+        limit: number;
+        allowed: boolean;
+    }>({
+        remaining: isSignedIn ? 3 : 1,
+        limit: isSignedIn ? 3 : 1,
+        allowed: true,
+    });
+
+    // Load initial usage
+    useEffect(() => {
+        const loadUsage = async () => {
+            try {
+                const usage = await getJobAnalysisUsage();
+                setAnalysisUsage(usage);
+                // Only set rateLimitReached if there are truly no remaining analyses
+                // But don't disable the form until user actually tries to submit
+            } catch (err) {
+                console.error("Error loading analysis usage:", err);
+                // On error, keep the default optimistic state
+            }
+        };
+        loadUsage();
+    }, []);
 
     // Simulate loading progress
     useEffect(() => {
@@ -47,6 +84,7 @@ export function JobFitAssessment() {
         setLoadingProgress(0);
         setError(null);
         setResult(null);
+        setRateLimitReached(false);
 
         try {
             const response = await fetch("/api/job-fit", {
@@ -55,12 +93,49 @@ export function JobFitAssessment() {
                 body: JSON.stringify({ jobDescription }),
             });
 
-            if (!response.ok) throw new Error("Failed to analyze job fit");
-
             const data = await response.json();
+
+            if (response.status === 429) {
+                // Rate limit exceeded
+                setError(data.error);
+                setRateLimitReached(true);
+                setAnalysisUsage({
+                    remaining: 0,
+                    limit: data.limit,
+                    allowed: false
+                });
+                setIsLoading(false);
+
+                // Show billing modal if user is logged in and on free plan (limit < 5)
+                if (isSignedIn && data.limit < 5) {
+                    setShowBillingModal(true);
+                }
+                return;
+            }
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to analyze job fit");
+            }
 
             // Complete animation to 100%
             setLoadingProgress(100);
+
+            // Update usage if provided
+            if (data.usage) {
+                setAnalysisUsage({
+                    remaining: data.usage.remaining,
+                    limit: data.usage.limit,
+                    allowed: data.usage.remaining > 0
+                });
+
+                // If this was the last analysis (remaining is now 0) and user is signed in on free plan
+                if (data.usage.remaining === 0 && isSignedIn && data.usage.limit < 5) {
+                    // Show billing modal after a short delay to let them see the result
+                    setTimeout(() => {
+                        setShowBillingModal(true);
+                    }, 2000);
+                }
+            }
 
             // Small delay to let animation finish before snapping result
             setTimeout(() => {
@@ -70,7 +145,7 @@ export function JobFitAssessment() {
 
         } catch (err) {
             console.error(err);
-            setError("Something went wrong. Please try again.");
+            setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
             setIsLoading(false);
         }
     };
@@ -94,17 +169,57 @@ export function JobFitAssessment() {
                 <div className="text-center mb-10 space-y-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium uppercase tracking-wider">
                         <Sparkles className="w-3 h-3" />
-                        AI Recruiter Tool
+                        Herramienta IA para Reclutadores
                     </div>
                     <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60">
-                        Do I fit the role?
+                        ¿Encajo en el puesto?
                     </h2>
                     <p className="text-muted-foreground max-w-lg mx-auto text-lg">
-                        Paste a job description below and let my AI Twin honestly analyze if I'm a good match for your team.
+                        Pega una descripción del trabajo y deja que mi clon IA analice honestamente si soy una buena opción para tu equipo.
                     </p>
                 </div>
 
                 <div className="relative z-10">
+                    {/* Analysis Counter */}
+                    <div className="mb-4 max-w-md mx-auto">
+                        <AnalysisCounter
+                            remaining={analysisUsage.remaining}
+                            limit={analysisUsage.limit}
+                        />
+                    </div>
+
+                    {/* Rate Limit Warning */}
+                    {rateLimitReached && error && (
+                        <div className="mb-6 p-4 max-w-2xl mx-auto rounded-xl bg-red-500/10 border border-red-500/20 backdrop-blur-md">
+                            <div className="flex items-start gap-3">
+                                <Lock className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
+                                <div className="flex-1">
+                                    <p className="text-red-200 text-sm">
+                                        {error}
+                                    </p>
+                                    {!isSignedIn && (
+                                        <Link
+                                            href="/sign-in"
+                                            className="mt-2 inline-flex items-center gap-2 text-sm text-red-300 hover:text-red-100 underline underline-offset-4 transition-colors"
+                                        >
+                                            Iniciar sesión para más análisis
+                                            <ArrowRight className="h-3 w-3" />
+                                        </Link>
+                                    )}
+                                    {isSignedIn && analysisUsage.limit < 5 && (
+                                        <button
+                                            onClick={() => setShowBillingModal(true)}
+                                            className="mt-2 inline-flex items-center gap-2 text-sm text-red-300 hover:text-red-100 transition-colors cursor-pointer"
+                                        >
+                                            <Crown className="h-4 w-4" />
+                                            Actualizar a Recruiter para 5 análisis/día
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Input Card */}
                     <div className={cn(
                         "bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl transition-all duration-500",
@@ -115,8 +230,9 @@ export function JobFitAssessment() {
                                 <Textarea
                                     value={jobDescription}
                                     onChange={(e) => setJobDescription(e.target.value)}
-                                    placeholder="Paste job description here (e.g. 'Senior Frontend Engineer at TechCorp...')"
+                                    placeholder="Pega la descripción del trabajo aquí (ej. 'Ingeniero Frontend Senior en TechCorp...')"
                                     className="w-full min-h-[150px] bg-white/5 border-white/10 rounded-xl p-4 text-white placeholder:text-neutral-500 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:border-transparent resize-none transition-all scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent text-base"
+                                    disabled={isLoading}
                                 />
                                 <div className="absolute bottom-4 right-4 translate-y-0">
                                     <Button
@@ -130,11 +246,11 @@ export function JobFitAssessment() {
                                         {isLoading ? (
                                             <>
                                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                                Analyzing...
+                                                Analizando...
                                             </>
                                         ) : (
                                             <>
-                                                Analyze Fit <ArrowRight className="ml-2 h-4 w-4" />
+                                                Analizar Compatibilidad <ArrowRight className="ml-2 h-4 w-4" />
                                             </>
                                         )}
                                     </Button>
@@ -162,9 +278,9 @@ export function JobFitAssessment() {
                                     />
                                 </div>
                                 <div>
-                                    <p className="text-muted-foreground text-sm uppercase tracking-widest font-medium">Match Score</p>
+                                    <p className="text-muted-foreground text-sm uppercase tracking-widest font-medium">Puntuación de Compatibilidad</p>
                                     <h3 className={cn("text-xl font-bold mt-1", result ? getScoreTextColor(result.matchScore) : "text-white")}>
-                                        {result?.verdict || "Calculating..."}
+                                        {result?.verdict || "Calculando..."}
                                     </h3>
 
                                     {/* Conversion CTA */}
@@ -174,7 +290,7 @@ export function JobFitAssessment() {
                                                 href="#contact"
                                                 className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-white border border-white/5 hover:border-white/20 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-500 hover:scale-105"
                                             >
-                                                Let's talk about it <ArrowRight className="w-3 h-3" />
+                                                Hablemos de ello <ArrowRight className="w-3 h-3" />
                                             </a>
                                         </div>
                                     )}
@@ -186,7 +302,7 @@ export function JobFitAssessment() {
                                 {isLoading ? (
                                     <div className="h-full flex flex-col items-center justify-center space-y-4 text-muted-foreground animate-pulse">
                                         <Loader2 className="h-8 w-8 animate-spin text-primary opacity-50" />
-                                        <p>Analyzing profile vs job requirements...</p>
+                                        <p>Analizando perfil vs requisitos del trabajo...</p>
                                     </div>
                                 ) : (
                                     <>
@@ -194,7 +310,7 @@ export function JobFitAssessment() {
                                             <div className="animate-in fade-in duration-500">
                                                 <h4 className="flex items-center gap-2 text-lg font-semibold text-white mb-2">
                                                     <Briefcase className="h-5 w-5 text-primary" />
-                                                    Summary
+                                                    Resumen
                                                 </h4>
                                                 <p className="text-neutral-300 leading-relaxed">
                                                     {result.summary}
@@ -206,7 +322,7 @@ export function JobFitAssessment() {
                                             {result?.strengths && (
                                                 <div className="space-y-3 animate-in fade-in slide-in-from-left-5 duration-500 delay-100">
                                                     <h4 className="text-sm font-medium text-emerald-400 uppercase tracking-wider flex items-center gap-2">
-                                                        <CheckCircle2 className="h-4 w-4" /> Why I fit
+                                                        <CheckCircle2 className="h-4 w-4" /> Por qué encajo
                                                     </h4>
                                                     <ul className="space-y-2">
                                                         {result.strengths.map((str, i) => (
@@ -222,7 +338,7 @@ export function JobFitAssessment() {
                                             {result?.gaps && (
                                                 <div className="space-y-3 animate-in fade-in slide-in-from-right-5 duration-500 delay-200">
                                                     <h4 className="text-sm font-medium text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                                                        <AlertTriangle className="h-4 w-4" /> Potential Gaps
+                                                        <AlertTriangle className="h-4 w-4" /> Posibles Brechas
                                                     </h4>
                                                     <ul className="space-y-2">
                                                         {result.gaps.map((gap, i) => (
@@ -242,6 +358,12 @@ export function JobFitAssessment() {
                     )}
                 </div>
             </div>
+
+            {/* Billing Modal */}
+            <BillingModal
+                open={showBillingModal}
+                onOpenChange={setShowBillingModal}
+            />
         </section>
     );
 }

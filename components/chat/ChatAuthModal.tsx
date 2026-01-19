@@ -83,7 +83,7 @@ export function ChatAuthModal({
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center gap-2">
                     <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                    <span>Hasta <span className="font-semibold">10 mensajes al día</span></span>
+                    <span>Hasta <span className="font-semibold">5 mensajes al día</span></span>
                   </li>
                   <li className="flex items-center gap-2">
                     <svg

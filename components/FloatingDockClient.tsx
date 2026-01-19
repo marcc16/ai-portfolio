@@ -111,7 +111,7 @@ export function FloatingDockClient({ navItems }: FloatingDockClientProps) {
                 </div>
                 {/* Tooltip */}
                 <div className="absolute -top-9 md:-top-12 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-xl bg-black/90 backdrop-blur-xl border border-white/20 text-xs md:text-sm font-medium text-neutral-200 whitespace-nowrap opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 group-hover:-translate-y-2 transition-all duration-300 pointer-events-none shadow-[0_8px_32px_0_rgba(0,0,0,0.2)]">
-                  More
+                  Más
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-black/90 border-r border-b border-white/20" />
                 </div>
               </button>
@@ -191,7 +191,7 @@ export function FloatingDockClient({ navItems }: FloatingDockClientProps) {
                   </div>
                   {/* Tooltip */}
                   <div className="absolute right-14 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg bg-black/90 backdrop-blur-xl border border-white/20 text-sm font-medium text-neutral-200 whitespace-nowrap opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 group-hover:-translate-x-1 transition-all duration-300 pointer-events-none shadow-[0_8px_32px_0_rgba(0,0,0,0.2)]">
-                    More
+                    Más
                     <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 rotate-45 bg-black/90 border-r border-t border-white/20" />
                   </div>
                 </button>

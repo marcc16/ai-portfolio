@@ -58,9 +58,9 @@ export async function EducationSection() {
 
       <div className="container mx-auto max-w-6xl relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Education</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Educación</h2>
           <p className="text-xl text-muted-foreground">
-            My academic background
+            Mi formación académica
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export async function EducationSection() {
                       <span>
                         {edu.startDate && formatDate(edu.startDate)} -{" "}
                         {edu.current
-                          ? "Present"
+                          ? "Presenteeee"
                           : edu.endDate
                             ? formatDate(edu.endDate)
                             : "N/A"}
@@ -136,7 +136,7 @@ export async function EducationSection() {
                     <div className="mb-4 p-3 rounded-lg bg-muted/50">
                       <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
                         <IconAward className="w-4 h-4 text-primary" />
-                        Achievements & Honors
+                        Logros y reconocimientos
                       </h4>
                       <ul className="space-y-1.5">
                         {edu.achievements.map((achievement, idx) => (

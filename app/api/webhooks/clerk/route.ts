@@ -86,7 +86,7 @@ export async function POST(req: Request) {
                     subscriptionPlan: planName
                 }
             });
-            console.log = {`Updated user ${userId} plan to ${planName}`);
+            console.log(`Updated user ${userId} plan to ${planName}`);
         }
     }
 

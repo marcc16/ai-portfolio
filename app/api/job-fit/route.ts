@@ -1,3 +1,6 @@
+import { auth, clerkClient } from "@clerk/nextjs/server";
+import { hasRemainingJobAnalyses, incrementJobAnalysisCount } from "@/lib/message-tracking";
+
 // Full CV Content for context
 const MY_CV = `
 Marc Bau Benavent
@@ -40,9 +43,96 @@ Educación
 
 export const maxDuration = 30;
 
+/**
+ * Get user's subscription plan from Clerk
+ */
+async function getUserPlan(userId: string): Promise<"free" | "recruiter"> {
+  try {
+    const client = await clerkClient();
+    const user = await client.users.getUser(userId);
+
+    // Check if user has active subscription to "recruiter" plan
+    // @ts-ignore
+    const subscriptions = user.organizationMemberships || [];
+    const hasRecruiterPlan = subscriptions.some(
+      (membership: any) => membership.organization?.publicMetadata?.plan === "recruiter"
+    );
+
+    if (hasRecruiterPlan) return "recruiter";
+
+    // Also check public metadata for manual assignments
+    const plan = user.publicMetadata?.subscriptionPlan as string | undefined;
+    if (plan === "recruiter") return "recruiter";
+
+    // Check private metadata (set by Clerk Billing webhooks)
+    const privateMetadataPlan = user.privateMetadata?.subscriptionPlan as string | undefined;
+    if (privateMetadataPlan === "recruiter") return "recruiter";
+
+    return "free";
+  } catch (error) {
+    console.error("Error fetching user plan:", error);
+    return "free";
+  }
+}
+
+/**
+ * Get analysis limit based on user status and plan
+ * - Anonymous: 1 analysis per day
+ * - Logged in (free): 3 analyses per day
+ * - Paid (recruiter): 5 analyses per day
+ */
+function getAnalysisLimit(isGuest: boolean, plan: "free" | "recruiter"): number {
+  if (isGuest) return 1;
+  if (plan === "recruiter") return 5;
+  return 3; // free authenticated users
+}
+
 export async function POST(req: Request) {
   try {
     const { jobDescription } = await req.json();
+    const { userId } = await auth();
+    const isGuest = !userId;
+
+    // Get user's plan if authenticated
+    const plan = userId ? await getUserPlan(userId) : "free";
+    const analysisLimit = getAnalysisLimit(isGuest, plan);
+
+    // Get identifier for tracking
+    let identifier: string;
+    if (userId) {
+      identifier = userId;
+    } else {
+      // For guests, use IP address
+      const forwarded = req.headers.get("x-forwarded-for");
+      const isDev = process.env.NODE_ENV === "development";
+      identifier = forwarded ?? (isDev ? "86.106.2.121" : "127.0.0.1");
+    }
+
+    // Check daily analysis limit
+    const { allowed, remaining, limit } = await hasRemainingJobAnalyses(
+      identifier,
+      isGuest,
+      analysisLimit
+    );
+
+    if (!allowed) {
+      const errorMessage = isGuest
+        ? `Has alcanzado el límite de ${limit} análisis diario. Inicia sesión para obtener ${getAnalysisLimit(false, "free")} análisis al día.`
+        : plan === "recruiter"
+          ? `Has alcanzado el límite de ${limit} análisis diarios. Vuelve mañana para continuar.`
+          : `Has alcanzado el límite de ${limit} análisis diarios. Actualiza a Recruiter para obtener ${getAnalysisLimit(false, "recruiter")} análisis al día.`;
+
+      return new Response(
+        JSON.stringify({
+          error: errorMessage,
+          rateLimitExceeded: true,
+          remaining: 0,
+          limit
+        }),
+        { status: 429 }
+      );
+    }
+
     const apiKey = process.env.OPENAI_API_KEY;
 
     if (!apiKey) {
@@ -106,10 +196,21 @@ export async function POST(req: Request) {
     // Use JSON.parse with confidence as we strictly requested json_object
     const object = JSON.parse(content);
 
-    return Response.json(object);
+    // Increment analysis count after successful analysis
+    await incrementJobAnalysisCount(identifier, isGuest, analysisLimit);
+
+    // Get updated usage for response
+    const updatedUsage = await hasRemainingJobAnalyses(identifier, isGuest, analysisLimit);
+
+    return Response.json({
+      ...object,
+      usage: {
+        remaining: updatedUsage.remaining,
+        limit: updatedUsage.limit,
+      }
+    });
   } catch (error) {
     console.error('Job Fit API Error:', error);
     return new Response(JSON.stringify({ error: 'Failed to analyze job fit' }), { status: 500 });
   }
 }
-

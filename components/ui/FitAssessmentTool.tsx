@@ -21,7 +21,7 @@ export function FitAssessmentTool() {
 
     const handleAnalyze = async () => {
         if (!jobDescription.trim()) {
-            setError("Please paste a job description first");
+            setError("Por favor pega primero una descripción del trabajo");
             return;
         }
 
@@ -39,14 +39,14 @@ export function FitAssessmentTool() {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to analyze fit");
+                throw new Error("Error al analizar compatibilidad");
             }
 
             const data = await response.json();
             setAnalysis(data);
         } catch (err) {
             setError(
-                err instanceof Error ? err.message : "An error occurred during analysis"
+                err instanceof Error ? err.message : "Ocurrió un error durante el análisis"
             );
         } finally {
             setIsAnalyzing(false);
@@ -82,11 +82,11 @@ export function FitAssessmentTool() {
     const getFitTitle = (fitLevel: FitLevel) => {
         switch (fitLevel) {
             case "strong":
-                return "Strong Fit - Let's Talk!";
+                return "Muy Compatible - ¡Hablemos!";
             case "partial":
-                return "Partial Fit - Some Alignment";
+                return "Parcialmente Compatible - Algo de Alineación";
             case "weak":
-                return "Weak Fit - Not Recommended";
+                return "Poco Compatible - No Recomendado";
             default:
                 return "";
         }
@@ -95,10 +95,10 @@ export function FitAssessmentTool() {
     return (
         <div className="w-full max-w-4xl mx-auto">
             <div className="mb-8 text-center">
-                <h3 className="text-2xl font-bold mb-2">Job Fit Assessment</h3>
+                <h3 className="text-2xl font-bold mb-2">Evaluación de Compatibilidad</h3>
                 <p className="text-muted-foreground">
-                    Paste a job description below and I'll give you an honest assessment of
-                    how well my experience aligns with the role.
+                    Pega una descripción del trabajo y te daré una evaluación honesta de
+                    qué tan bien mi experiencia se alinea con el puesto.
                 </p>
             </div>
 
@@ -108,13 +108,13 @@ export function FitAssessmentTool() {
                         htmlFor="job-description"
                         className="block text-sm font-medium mb-2"
                     >
-                        Job Description
+                        Descripción del Trabajo
                     </label>
                     <textarea
                         id="job-description"
                         value={jobDescription}
                         onChange={(e) => setJobDescription(e.target.value)}
-                        placeholder="Paste the complete job description here..."
+                        placeholder="Pega la descripción completa del trabajo aquí..."
                         className="w-full min-h-[200px] p-4 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary resize-y"
                         disabled={isAnalyzing}
                     />
@@ -128,10 +128,10 @@ export function FitAssessmentTool() {
                     {isAnalyzing ? (
                         <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            Analyzing Fit...
+                            Analizando Compatibilidad...
                         </>
                     ) : (
-                        "Analyze Fit"
+                        "Analizar Compatibilidad"
                     )}
                 </button>
 
@@ -158,7 +158,7 @@ export function FitAssessmentTool() {
                             <div>
                                 <h5 className="font-semibold mb-2 flex items-center gap-2">
                                     <CheckCircle2 className="w-5 h-5 text-green-600" />
-                                    What Aligns
+                                    Qué se Alinea
                                 </h5>
                                 <ul className="space-y-1 ml-7">
                                     {analysis.alignments.map((item, index) => (
@@ -174,7 +174,7 @@ export function FitAssessmentTool() {
                             <div>
                                 <h5 className="font-semibold mb-2 flex items-center gap-2">
                                     <XCircle className="w-5 h-5 text-red-600" />
-                                    Gaps & Considerations
+                                    Brechas y Consideraciones
                                 </h5>
                                 <ul className="space-y-1 ml-7">
                                     {analysis.gaps.map((item, index) => (
@@ -187,7 +187,7 @@ export function FitAssessmentTool() {
                         )}
 
                         <div className="pt-4 border-t border-border">
-                            <h5 className="font-semibold mb-2">My Recommendation</h5>
+                            <h5 className="font-semibold mb-2">Mi Recomendación</h5>
                             <p className="text-sm">{analysis.recommendation}</p>
                         </div>
                     </div>

@@ -1,0 +1,302 @@
+{
+  "name": "portfolio-widgets",
+  "version": "1.0.0",
+  "description": "Premium widgets for portfolio chat - experience, tech stack, and projects",
+  "widgets": {
+    "experience_card": {
+      "type": "card",
+      "description": "Display work experience with company logo, role, dates, and tech badges",
+      "parameters": {
+        "company": { "type": "string", "required": true },
+        "role": { "type": "string", "required": true },
+        "logo_url": { "type": "string", "required": false },
+        "start_date": { "type": "string", "required": true },
+        "end_date": { "type": "string", "required": false },
+        "location": { "type": "string", "required": false },
+        "is_current": { "type": "boolean", "required": false },
+        "achievements": { "type": "array", "items": { "type": "string" }, "required": false },
+        "technologies": { "type": "array", "items": { "type": "string" }, "required": false }
+      },
+      "template": {
+        "type": "card",
+        "size": "lg",
+        "children": [
+          {
+            "type": "row",
+            "gap": 16,
+            "align": "start",
+            "children": [
+              {
+                "type": "image",
+                "src": "{{logo_url}}",
+                "alt": "{{company}} Logo",
+                "width": "56px",
+                "height": "56px",
+                "radius": "md",
+                "fit": "contain"
+              },
+              {
+                "type": "col",
+                "gap": 8,
+                "flex": 1,
+                "children": [
+                  {
+                    "type": "row",
+                    "justify": "between",
+                    "align": "start",
+                    "children": [
+                      {
+                        "type": "col",
+                        "gap": 4,
+                        "children": [
+                          {
+                            "type": "title",
+                            "value": "{{role}}",
+                            "size": "md",
+                            "weight": "semibold"
+                          },
+                          {
+                            "type": "text",
+                            "value": "{{company}}",
+                            "size": "md",
+                            "color": { "light": "#64748b", "dark": "#94a3b8" }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "badge",
+                        "label": "{{#if is_current}}Current{{else}}{{/if}}",
+                        "color": "success",
+                        "variant": "soft",
+                        "pill": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "row",
+                    "gap": 12,
+                    "children": [
+                      {
+                        "type": "caption",
+                        "value": "📅 {{start_date}}{{#if end_date}} - {{end_date}}{{else}} - Present{{/if}}",
+                        "size": "sm",
+                        "color": { "light": "#64748b", "dark": "#94a3b8" }
+                      },
+                      {
+                        "type": "caption",
+                        "value": "📍 {{location}}",
+                        "size": "sm",
+                        "color": { "light": "#64748b", "dark": "#94a3b8" }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "divider",
+                    "spacing": 12
+                  },
+                  {
+                    "type": "markdown",
+                    "value": "{{#each achievements}}• {{this}}\n{{/each}}"
+                  },
+                  {
+                    "type": "row",
+                    "gap": 8,
+                    "wrap": "wrap",
+                    "margin": { "top": 12 },
+                    "children": "{{#each technologies}}{{badge this}}{{/each}}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "tech_stack": {
+      "type": "card",
+      "description": "Display grouped tech stack by category",
+      "parameters": {
+        "frontend": { "type": "array", "items": { "type": "string" }, "required": false },
+        "backend": { "type": "array", "items": { "type": "string" }, "required": false },
+        "devops": { "type": "array", "items": { "type": "string" }, "required": false }
+      },
+      "template": {
+        "type": "card",
+        "size": "lg",
+        "children": [
+          {
+            "type": "title",
+            "value": "💻 Tech Stack",
+            "size": "lg",
+            "weight": "semibold",
+            "margin": { "bottom": 16 }
+          },
+          {
+            "type": "col",
+            "gap": 16,
+            "children": [
+              {
+                "type": "col",
+                "gap": 8,
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Frontend",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": { "light": "#64748b", "dark": "#94a3b8" }
+                  },
+                  {
+                    "type": "row",
+                    "gap": 8,
+                    "wrap": "wrap",
+                    "children": "{{#each frontend}}{{badge this color='info'}}{{/each}}"
+                  }
+                ]
+              },
+              {
+                "type": "divider"
+              },
+              {
+                "type": "col",
+                "gap": 8,
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Backend",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": { "light": "#64748b", "dark": "#94a3b8" }
+                  },
+                  {
+                    "type": "row",
+                    "gap": 8,
+                    "wrap": "wrap",
+                    "children": "{{#each backend}}{{badge this color='success'}}{{/each}}"
+                  }
+                ]
+              },
+              {
+                "type": "divider"
+              },
+              {
+                "type": "col",
+                "gap": 8,
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "DevOps & Cloud",
+                    "size": "sm",
+                    "weight": "semibold",
+                    "color": { "light": "#64748b", "dark": "#94a3b8" }
+                  },
+                  {
+                    "type": "row",
+                    "gap": 8,
+                    "wrap": "wrap",
+                    "children": "{{#each devops}}{{badge this color='warning'}}{{/each}}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "project_card": {
+      "type": "card",
+      "description": "Display project with cover image, description, and CTAs",
+      "parameters": {
+        "title": { "type": "string", "required": true },
+        "category": { "type": "string", "required": false },
+        "description": { "type": "string", "required": true },
+        "cover_image": { "type": "string", "required": false },
+        "features": { "type": "array", "items": { "type": "string" }, "required": false },
+        "technologies": { "type": "array", "items": { "type": "string" }, "required": false },
+        "live_url": { "type": "string", "required": false },
+        "github_url": { "type": "string", "required": false },
+        "is_featured": { "type": "boolean", "required": false }
+      },
+      "template": {
+        "type": "card",
+        "size": "lg",
+        "children": [
+          {
+            "type": "image",
+            "src": "{{cover_image}}",
+            "alt": "{{title}} Screenshot",
+            "width": "100%",
+            "aspectRatio": "16/9",
+            "radius": "md",
+            "fit": "cover",
+            "margin": { "bottom": 16 }
+          },
+          {
+            "type": "col",
+            "gap": 12,
+            "children": [
+              {
+                "type": "row",
+                "justify": "between",
+                "align": "start",
+                "children": [
+                  {
+                    "type": "title",
+                    "value": "{{title}}",
+                    "size": "lg",
+                    "weight": "semibold"
+                  },
+                  {
+                    "type": "badge",
+                    "label": "{{#if is_featured}}Featured{{else}}{{/if}}",
+                    "color": "warning",
+                    "variant": "soft",
+                    "pill": true
+                  }
+                ]
+              },
+              {
+                "type": "caption",
+                "value": "🚀 {{category}}",
+                "size": "sm",
+                "color": { "light": "#64748b", "dark": "#94a3b8" }
+              },
+              {
+                "type": "text",
+                "value": "{{description}}",
+                "size": "md"
+              },
+              {
+                "type": "divider",
+                "spacing": 12
+              },
+              {
+                "type": "col",
+                "gap": 8,
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "🎯 Key Features:",
+                    "size": "sm",
+                    "weight": "semibold"
+                  },
+                  {
+                    "type": "markdown",
+                    "value": "{{#each features}}• {{this}}\n{{/each}}"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "gap": 8,
+                "wrap": "wrap",
+                "margin": { "top": 12 },
+                "children": "{{#each technologies}}{{badge this variant='outline'}}{{/each}}"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

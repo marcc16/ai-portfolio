@@ -50,10 +50,10 @@ export async function CertificationsSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Certifications
+            Certificaciones
           </h2>
           <p className="text-xl text-muted-foreground">
-            Professional credentials and certifications
+            Credenciales y certificaciones profesionales
           </p>
         </div>
 
@@ -168,8 +168,8 @@ export async function CertificationsSection() {
                               {cert.skills.slice(0, 4).map((skill, idx) => {
                                 const skillData =
                                   skill &&
-                                  typeof skill === "object" &&
-                                  "name" in skill
+                                    typeof skill === "object" &&
+                                    "name" in skill
                                     ? skill
                                     : null;
                                 return skillData?.name ? (

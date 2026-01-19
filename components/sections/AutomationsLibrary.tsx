@@ -18,7 +18,7 @@ const AUTOMATIONS = [
     { title: "Product Ad Generator", link: "https://www.notion.so/Product-Ad-Generator-274d87f9d70f815cae90e6ca04244196?pvs=21", category: "Ads", complexity: "High", roi: "10x", apis: ["OpenAI", "Midjourney", "AdMgr"] },
     { title: "Personalized Email Machine", link: "https://www.notion.so/Personalized-Email-Machine-274d87f9d70f8103957cf513999be3ba?pvs=21", category: "Outreach", complexity: "Medium", roi: "5x", apis: ["Gmail", "OpenAI", "Sheets"] },
     { title: "Facebook Ads Generator", link: "https://www.notion.so/Facebook-Ads-Generator-274d87f9d70f8133a3d7c79ffa3ca002?pvs=21", category: "Ads", complexity: "High", roi: "8x", apis: ["Meta API", "DALL-E 3"] },
-    { title: "SEO Blog Automation System", link: "https://www.notion.so/SEO-Blog-Automation-System-274d87f9d70f8179ab3fccdc4d4dccd5?pvs=21", category: "Content", complexity: "Medium", roi: "Long-term", apis: ["Wordpress", "Semrush", "GPT-4"] },
+    { title: "SEO Blog Sistema de Automatización", link: "https://www.notion.so/SEO-Blog-Automation-System-274d87f9d70f8179ab3fccdc4d4dccd5?pvs=21", category: "Content", complexity: "Medium", roi: "Long-term", apis: ["Wordpress", "Semrush", "GPT-4"] },
     { title: "Veo3 AI Video Generator", link: "https://www.notion.so/Veo3-AI-Video-Generator-274d87f9d70f81ffb7a7ff58b83411c4?pvs=21", category: "Video", complexity: "Extreme", roi: "High", apis: ["Runway", "ElevenLabs"] },
     { title: "Multi-Platform Publisher", link: "https://www.notion.so/Multi-Platform-Publisher-274d87f9d70f819d84c4f6de0172fc89?pvs=21", category: "Social", complexity: "Medium", roi: "Time-saver", apis: ["LinkedIn", "Twitter", "IG"] },
     { title: "Auto Graphic Design System", link: "https://www.notion.so/Auto-Graphic-Design-System-274d87f9d70f816598cfe46a976a442f?pvs=21", category: "Design", complexity: "High", roi: "High", apis: ["Canva/Figma", "SDW"] },
@@ -27,7 +27,7 @@ const AUTOMATIONS = [
     { title: "AI SEO Writer", link: "https://www.notion.so/AI-SEO-Writer-274d87f9d70f817d8d75daa381a1afaa?pvs=21", category: "Content", complexity: "Medium", roi: "Traffic", apis: ["Ahrefs", "Claude"] },
     { title: "AI Clone Creator", link: "https://www.notion.so/AI-Clone-Creator-274d87f9d70f8106a2cec4a0169caa3d?pvs=21", category: "Video", complexity: "Extreme", roi: "Brand", apis: ["HeyGen", "Clone API"] },
     { title: "Video Analyzer", link: "https://www.notion.so/Video-Analyzer-274d87f9d70f8176a252fadf08442fe5?pvs=21", category: "Research", complexity: "High", roi: "Insight", apis: ["Video Indexer", "GPT"] },
-    { title: "LinkedIn DM Automation System", link: "https://www.notion.so/LinkedIn-DM-Automation-System-274d87f9d70f814091fbcc6a5086d92b?pvs=21", category: "Outreach", complexity: "High", roi: "Leads", apis: ["LinkedIn", "Sales Nav"] },
+    { title: "LinkedIn DM Sistema de Automatización", link: "https://www.notion.so/LinkedIn-DM-Automation-System-274d87f9d70f814091fbcc6a5086d92b?pvs=21", category: "Outreach", complexity: "High", roi: "Leads", apis: ["LinkedIn", "Sales Nav"] },
     { title: "Instagram Viral Searcher", link: "https://www.notion.so/Instagram-Viral-Searcher-274d87f9d70f8132b249f91ce68ef530?pvs=21", category: "Research", complexity: "Low", roi: "Strategic", apis: ["IG Graph"] },
     { title: "AI Marketing Team", link: "https://www.notion.so/AI-Marketing-Team-274d87f9d70f816abe99de48a14a8e07?pvs=21", category: "Strategy", complexity: "Extreme", roi: "20x", apis: ["AutoGPT", "Zapier"] },
     { title: "Facebook Ad Spy System", link: "https://www.notion.so/Facebook-Ad-Spy-System-274d87f9d70f81a48388c92031808bed?pvs=21", category: "Research", complexity: "Medium", roi: "Intel", apis: ["Ad Library"] },
@@ -42,11 +42,11 @@ const AUTOMATIONS = [
     { title: "Free Apollo Lead Scraper", link: "https://www.notion.so/Free-Apollo-Lead-Scraper-274d87f9d70f81f093bfe6b33aeec4f0?pvs=21", category: "Data", complexity: "Medium", roi: "Savings", apis: ["Custom Scraper"] },
     { title: "YouTube Content Strategist", link: "https://www.notion.so/YouTube-Content-Strategist-274d87f9d70f81039278e9ebfca1f385?pvs=21", category: "Strategy", complexity: "Medium", roi: "Growth", apis: ["YouTube Analytics"] },
     { title: "Custom Style Image Generator", link: "https://www.notion.so/Custom-Style-Image-Generator-274d87f9d70f81269961d1eb79d2e52c?pvs=21", category: "Design", complexity: "High", roi: "Brand", apis: ["LoRA", "SDXL"] },
-    { title: "Veo3 Video Automation System", link: "https://www.notion.so/Veo3-Video-Automation-System-274d87f9d70f81c697d4cb33f40743b4?pvs=21", category: "Video", complexity: "Extreme", roi: "Scale", apis: ["Veo3", "N8n"] },
+    { title: "Veo3 Video Sistema de Automatización", link: "https://www.notion.so/Veo3-Video-Automation-System-274d87f9d70f81c697d4cb33f40743b4?pvs=21", category: "Video", complexity: "Extreme", roi: "Scale", apis: ["Veo3", "N8n"] },
     { title: "AI Ad Content Creator", link: "https://www.notion.so/AI-Ad-Content-Creator-274d87f9d70f8124a485c6b22478ec4b?pvs=21", category: "Ads", complexity: "High", roi: "Performance", apis: ["GPT-4 Vision", "FB Ads"] },
     { title: "AI Copywriting Team", link: "https://www.notion.so/AI-Copywriting-Team-274d87f9d70f81d4bb63c6d70fc48630?pvs=21", category: "Content", complexity: "High", roi: "Scale", apis: ["Claude 3", "GPT-4"] },
     { title: "Animal Battle Shorts Creator", link: "https://www.notion.so/Animal-Battle-Shorts-Creator-274d87f9d70f81b9a38ef8eff4543cb5?pvs=21", category: "Viral", complexity: "Medium", roi: "Views", apis: ["DALL-E", "CapCut"] },
-    { title: "Twitter Thread Automation System", link: "https://www.notion.so/Twitter-Thread-Automation-System-274d87f9d70f8162b7d9f3717e93b593?pvs=21", category: "Social", complexity: "Low", roi: "Reach", apis: ["Twitter API v2"] },
+    { title: "Twitter Thread Sistema de Automatización", link: "https://www.notion.so/Twitter-Thread-Automation-System-274d87f9d70f8162b7d9f3717e93b593?pvs=21", category: "Social", complexity: "Low", roi: "Reach", apis: ["Twitter API v2"] },
     { title: "Viral Shorts Generator", link: "https://www.notion.so/Viral-Shorts-Generator-274d87f9d70f81f299f6c33ed6bf1d7c?pvs=21", category: "Viral", complexity: "High", roi: "Growth", apis: ["Opus Clip", "Subs API"] },
     { title: "Seedance AI Video Generator", link: "https://www.notion.so/Seedance-AI-Video-Generator-274d87f9d70f8158bfaedfccc2a12ab1?pvs=21", category: "Video", complexity: "High", roi: "Creative", apis: ["Sora (Sim)", "Runway"] },
     { title: "Cold Email Bulk Personalizer", link: "https://www.notion.so/Cold-Email-Bulk-Personalizer-274d87f9d70f81acab2fc3137c9b6f64?pvs=21", category: "Outreach", complexity: "High", roi: "Response Rate", apis: ["Clay", "GPT-4"] },
@@ -64,30 +64,30 @@ export function AutomationsLibrary() {
                     <div className="space-y-4 max-w-2xl">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/80 text-xs font-medium uppercase tracking-wider">
                             <Zap className="w-3 h-3 text-purple-400" />
-                            Immediate ROI Engine
+                            Motor de ROI Inmediato
                         </div>
                         <h2 className="text-3xl md:text-5xl font-bold text-white">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">30+ Plug & Play</span>
                             <br />
-                            n8n Workflows
+                            Workflows n8n
                         </h2>
                         <p className="text-lg text-muted-foreground leading-relaxed">
-                            I don't just talk about efficiency; I deploy it. This is my personal arsenal of production-ready automations.
+                            No solo hablo de eficiencia; la implemento. Este es mi arsenal personal de automatizaciones listas para producción.
                             <span className="text-white font-medium ml-1">
-                                I can adapt and deploy any of these into your ecosystem within days.
+                                Puedo adaptar y desplegar cualquiera de estas en tu ecosistema en cuestión de días.
                             </span>
                         </p>
                     </div>
 
                     <div className="flex gap-4 text-sm text-neutral-400 hidden lg:flex">
                         <div className="flex items-center gap-2 bg-white/5 rounded-lg px-4 py-2 border border-white/5">
-                            <Bot className="w-4 h-4 text-purple-400" /> 37+ Agents
+                            <Bot className="w-4 h-4 text-purple-400" /> 37+ Agentes
                         </div>
                         <div className="flex items-center gap-2 bg-white/5 rounded-lg px-4 py-2 border border-white/5">
-                            <TrendingUp className="w-4 h-4 text-purple-400" /> High ROI
+                            <TrendingUp className="w-4 h-4 text-purple-400" /> Alto ROI
                         </div>
                         <div className="flex items-center gap-2 bg-white/5 rounded-lg px-4 py-2 border border-white/5">
-                            <Layers className="w-4 h-4 text-purple-400" /> n8n Native
+                            <Layers className="w-4 h-4 text-purple-400" /> Nativo n8n
                         </div>
                     </div>
                 </div>
@@ -99,11 +99,11 @@ export function AutomationsLibrary() {
                         <Table>
                             <TableHeader className="bg-black/80 sticky top-0 z-10 backdrop-blur-md">
                                 <TableRow className="border-white/10 hover:bg-transparent">
-                                    <TableHead className="text-neutral-400 font-medium w-[40%] pl-6">Automation System</TableHead>
-                                    <TableHead className="text-neutral-400 font-medium">Core Function</TableHead>
-                                    <TableHead className="text-neutral-400 font-medium">Complexity</TableHead>
-                                    <TableHead className="text-neutral-400 font-medium">Stack & APIs</TableHead>
-                                    <TableHead className="text-right text-purple-400/80 font-medium pr-6">Est. ROI</TableHead>
+                                    <TableHead className="text-neutral-400 font-medium w-[40%] pl-6">Sistema de Automatización</TableHead>
+                                    <TableHead className="text-neutral-400 font-medium">Función Principal</TableHead>
+                                    <TableHead className="text-neutral-400 font-medium">Complejidad</TableHead>
+                                    <TableHead className="text-neutral-400 font-medium">Stack y APIs</TableHead>
+                                    <TableHead className="text-right text-purple-400/80 font-medium pr-6">ROI Estimado</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody className="text-neutral-300">
@@ -129,7 +129,7 @@ export function AutomationsLibrary() {
                                             </Badge>
                                         </TableCell>
                                         <TableCell>
-                                            <Badge className={getComplexityColor(auto.complexity)}>
+                                            <Badge className={getComplejidadColor(auto.complexity)}>
                                                 {auto.complexity}
                                             </Badge>
                                         </TableCell>
@@ -160,7 +160,7 @@ export function AutomationsLibrary() {
                     <div className="absolute bottom-10 left-0 right-0 z-30 flex justify-center pointer-events-auto">
                         <Link href="#contact" className="group">
                             <div className="bg-white/5 backdrop-blur-md border border-white/10 px-8 py-3 rounded-full text-white text-sm font-medium shadow-lg hover:bg-white/10 transition-all duration-500 hover:scale-105 flex items-center gap-2">
-                                Customize for my business <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
+                                Quiero implementar IA <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
                             </div>
                         </Link>
                     </div>
@@ -171,7 +171,7 @@ export function AutomationsLibrary() {
 }
 
 // Helpers
-function getComplexityColor(level: string) {
+function getComplejidadColor(level: string) {
     switch (level) {
         case "Low": return "bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 border-blue-500/20";
         case "Medium": return "bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 border-purple-500/20";

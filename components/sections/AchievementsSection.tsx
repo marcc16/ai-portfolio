@@ -146,7 +146,7 @@ export async function AchievementsSection() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-xs @md/card:text-sm text-primary hover:underline"
                       >
-                        Learn More
+                        Saber Más
                         <IconExternalLink className="w-3.5 h-3.5 @md/card:w-4 @md/card:h-4" />
                       </Link>
                     )}
@@ -224,7 +224,7 @@ export async function AchievementsSection() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-xs @md/card:text-sm text-primary hover:underline mt-4 pt-4 border-t"
                       >
-                        Learn More
+                        Saber Más
                         <IconExternalLink className="w-3.5 h-3.5 @md/card:w-4 @md/card:h-4" />
                       </Link>
                     )}

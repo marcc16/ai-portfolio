@@ -40,10 +40,10 @@ export async function ExperienceSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Work Experience
+            Experiencia Laboral
           </h2>
           <p className="text-xl text-muted-foreground">
-            My professional journey
+            Mi trayectoria profesional
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export async function ExperienceSection() {
                       <span>
                         {exp.startDate && formatDate(exp.startDate)} -{" "}
                         {exp.current
-                          ? "Present"
+                          ? "Presenteeee"
                           : exp.endDate
                             ? formatDate(exp.endDate)
                             : "N/A"}
@@ -114,7 +114,7 @@ export async function ExperienceSection() {
                 {exp.responsibilities && exp.responsibilities.length > 0 && (
                   <div className="mb-4">
                     <h4 className="font-semibold mb-2 text-sm @md/card:text-base">
-                      Key Responsibilities:
+                      Responsabilidades clave:
                     </h4>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground text-xs @md/card:text-sm">
                       {exp.responsibilities.map((resp, idx) => (
@@ -127,7 +127,7 @@ export async function ExperienceSection() {
                 {exp.achievements && exp.achievements.length > 0 && (
                   <div className="mb-4">
                     <h4 className="font-semibold mb-2 text-sm @md/card:text-base">
-                      Achievements:
+                      Logros destacados:
                     </h4>
                     <ul className="list-disc list-inside space-y-1 text-muted-foreground text-xs @md/card:text-sm">
                       {exp.achievements.map((achievement, idx) => (

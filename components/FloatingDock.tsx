@@ -17,5 +17,13 @@ export async function FloatingDock() {
     return null;
   }
 
-  return <FloatingDockClient navItems={navItems} />;
+  // Filter out items that shouldn't appear in the dock
+  const excludedTitles = ['github', 'achievements', 'blog', 'testimonials', 'twitter'];
+  const filteredNavItems = navItems?.filter(item =>
+    !excludedTitles.some(excluded =>
+      item.title?.toLowerCase().includes(excluded)
+    )
+  ) || [];
+
+  return <FloatingDockClient navItems={filteredNavItems} />;
 }

@@ -1,0 +1,230 @@
+{
+  "version": "1.0",
+  "name": "Featured Project",
+  "template": "{\"type\":\"ListView\",\"children\":[{\"type\":\"ListViewItem\",\"onClickAction\":{\"type\":\"project.view\",\"payload\":{\"id\":{{ (id) | tojson }}}},\"align\":\"stretch\",\"children\":[{\"type\":\"Box\",\"background\":\"surface-elevated\",\"radius\":\"xl\",\"border\":1,\"gap\":0,\"flex\":\"auto\",\"children\":[{\"type\":\"Image\",\"src\":{{ (image) | tojson }},\"aspectRatio\":{{ ((16 / 9)) | tojson }},\"fit\":\"cover\",\"position\":\"center\",\"flush\":true,\"radius\":\"xl\"},{\"type\":\"Col\",\"padding\":4,\"gap\":3,\"children\":[{\"type\":\"Row\",\"children\":[{\"type\":\"Title\",\"value\":{{ (title) | tojson }},\"size\":\"lg\",\"weight\":\"bold\"},{\"type\":\"Spacer\"},{\"type\":\"Badge\",\"label\":\"Featured\",\"color\":\"warning\"}]},{\"type\":\"Text\",\"value\":{{ (category) | tojson }},\"size\":\"sm\",\"color\":\"primary\"},{\"type\":\"Text\",\"value\":{{ (description) | tojson }},\"size\":\"sm\",\"color\":\"secondary\",\"maxLines\":3},{\"type\":\"Divider\"},{\"type\":\"Col\",\"gap\":2,\"children\":[{%- set _c -%},{\"type\":\"Text\",\"value\":\"Key Features\",\"size\":\"sm\",\"weight\":\"semibold\"}{%-for item in features -%},{\"type\":\"Row\",\"key\":{{ (item) | tojson }},\"gap\":2,\"align\":\"center\",\"children\":[{\"type\":\"Icon\",\"name\":\"check-circle\",\"color\":\"success\"},{\"type\":\"Text\",\"value\":{{ (item) | tojson }},\"size\":\"sm\"}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]},{\"type\":\"Row\",\"gap\":2,\"wrap\":\"wrap\",\"children\":[{%- set _c -%}{%-for t in tech -%},{\"type\":\"Badge\",\"key\":{{ (t) | tojson }},\"label\":{{ (t) | tojson }},\"variant\":\"outline\"}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]}]}]}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "category": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "image": {
+        "type": "string"
+      },
+      "features": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "tech": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "id",
+      "title",
+      "category",
+      "description",
+      "image",
+      "features",
+      "tech"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "ListView",
+    "children": [
+      {
+        "type": "ListViewItem",
+        "onClickAction": {
+          "type": "project.view",
+          "payload": {
+            "id": "proj_novapulse"
+          }
+        },
+        "align": "stretch",
+        "children": [
+          {
+            "type": "Box",
+            "background": "surface-elevated",
+            "radius": "xl",
+            "border": 1,
+            "gap": 0,
+            "flex": "auto",
+            "children": [
+              {
+                "type": "Image",
+                "src": "https://drive.google.com/uc?export=view&id=1teYHJzoPqtrRmxY143N3Iz5gnLt36SgW",
+                "aspectRatio": 1.7777777777777777,
+                "fit": "cover",
+                "position": "center",
+                "flush": true,
+                "radius": "xl"
+              },
+              {
+                "type": "Col",
+                "padding": 4,
+                "gap": 3,
+                "children": [
+                  {
+                    "type": "Row",
+                    "children": [
+                      {
+                        "type": "Title",
+                        "value": "NovaPulse Analytics",
+                        "size": "lg",
+                        "weight": "bold"
+                      },
+                      {
+                        "type": "Spacer"
+                      },
+                      {
+                        "type": "Badge",
+                        "label": "Featured",
+                        "color": "warning"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Text",
+                    "value": "🚀 SaaS Platform",
+                    "size": "sm",
+                    "color": "primary"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "AI-driven customer insights platform delivering real-time cohort analysis, alerts, and automated reporting for growth teams.",
+                    "size": "sm",
+                    "color": "secondary",
+                    "maxLines": 3
+                  },
+                  {
+                    "type": "Divider"
+                  },
+                  {
+                    "type": "Col",
+                    "gap": 2,
+                    "children": [
+                      {
+                        "type": "Text",
+                        "value": "Key Features",
+                        "size": "sm",
+                        "weight": "semibold"
+                      },
+                      {
+                        "type": "Row",
+                        "key": "Real-time event ingestion and dashboards",
+                        "gap": 2,
+                        "align": "center",
+                        "children": [
+                          {
+                            "type": "Icon",
+                            "name": "check-circle",
+                            "color": "success"
+                          },
+                          {
+                            "type": "Text",
+                            "value": "Real-time event ingestion and dashboards",
+                            "size": "sm"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Row",
+                        "key": "Auto-segmented cohorts with churn risk scoring",
+                        "gap": 2,
+                        "align": "center",
+                        "children": [
+                          {
+                            "type": "Icon",
+                            "name": "check-circle",
+                            "color": "success"
+                          },
+                          {
+                            "type": "Text",
+                            "value": "Auto-segmented cohorts with churn risk scoring",
+                            "size": "sm"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Row",
+                        "key": "One-click reports to Slack, Email, and Notion",
+                        "gap": 2,
+                        "align": "center",
+                        "children": [
+                          {
+                            "type": "Icon",
+                            "name": "check-circle",
+                            "color": "success"
+                          },
+                          {
+                            "type": "Text",
+                            "value": "One-click reports to Slack, Email, and Notion",
+                            "size": "sm"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "gap": 2,
+                    "wrap": "wrap",
+                    "children": [
+                      {
+                        "type": "Badge",
+                        "key": "TypeScript",
+                        "label": "TypeScript",
+                        "variant": "outline"
+                      },
+                      {
+                        "type": "Badge",
+                        "key": "React",
+                        "label": "React",
+                        "variant": "outline"
+                      },
+                      {
+                        "type": "Badge",
+                        "key": "Node.js",
+                        "label": "Node.js",
+                        "variant": "outline"
+                      },
+                      {
+                        "type": "Badge",
+                        "key": "PostgreSQL",
+                        "label": "PostgreSQL",
+                        "variant": "outline"
+                      },
+                      {
+                        "type": "Badge",
+                        "key": "Docker",
+                        "label": "Docker",
+                        "variant": "outline"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6IjUyYWM0NGVlLTdiOTAtNGRiNS04ZmYwLWVlNjM2Njk2MmIwYyIsIm5hbWUiOiJGZWF0dXJlZCBQcm9qZWN0IiwidmlldyI6IjxMaXN0Vmlldz5cbiAgPExpc3RWaWV3SXRlbVxuICAgIG9uQ2xpY2tBY3Rpb249e3sgdHlwZTogXCJwcm9qZWN0LnZpZXdcIiwgcGF5bG9hZDogeyBpZCB9IH19XG4gICAgYWxpZ249XCJzdHJldGNoXCJcbiAgPlxuICAgIDxCb3hcbiAgICAgIGJhY2tncm91bmQ9XCJzdXJmYWNlLWVsZXZhdGVkXCJcbiAgICAgIHJhZGl1cz1cInhsXCJcbiAgICAgIGJvcmRlcj17MX1cbiAgICAgIGdhcD17MH1cbiAgICAgIGZsZXg9XCJhdXRvXCJcbiAgICA-XG4gICAgICA8SW1hZ2VcbiAgICAgICAgc3JjPXtpbWFnZX1cbiAgICAgICAgYXNwZWN0UmF0aW89ezE2IC8gOX1cbiAgICAgICAgZml0PVwiY292ZXJcIlxuICAgICAgICBwb3NpdGlvbj1cImNlbnRlclwiXG4gICAgICAgIGZsdXNoXG4gICAgICAgIHJhZGl1cz1cInhsXCJcbiAgICAgIC8-XG4gICAgICA8Q29sIHBhZGRpbmc9ezR9IGdhcD17M30-XG4gICAgICAgIDxSb3c-XG4gICAgICAgICAgPFRpdGxlIHZhbHVlPXt0aXRsZX0gc2l6ZT1cImxnXCIgd2VpZ2h0PVwiYm9sZFwiIC8-XG4gICAgICAgICAgPFNwYWNlciAvPlxuICAgICAgICAgIDxCYWRnZSBsYWJlbD1cIkZlYXR1cmVkXCIgY29sb3I9XCJ3YXJuaW5nXCIgLz5cbiAgICAgICAgPC9Sb3c-XG4gICAgICAgIDxUZXh0IHZhbHVlPXtjYXRlZ29yeX0gc2l6ZT1cInNtXCIgY29sb3I9XCJwcmltYXJ5XCIgLz5cbiAgICAgICAgPFRleHQgdmFsdWU9e2Rlc2NyaXB0aW9ufSBzaXplPVwic21cIiBjb2xvcj1cInNlY29uZGFyeVwiIG1heExpbmVzPXszfSAvPlxuICAgICAgICA8RGl2aWRlciAvPlxuICAgICAgICA8Q29sIGdhcD17Mn0-XG4gICAgICAgICAgPFRleHQgdmFsdWU9XCJLZXkgRmVhdHVyZXNcIiBzaXplPVwic21cIiB3ZWlnaHQ9XCJzZW1pYm9sZFwiIC8-XG4gICAgICAgICAge2ZlYXR1cmVzLm1hcCgoaXRlbSkgPT4gKFxuICAgICAgICAgICAgPFJvdyBrZXk9e2l0ZW19IGdhcD17Mn0gYWxpZ249XCJjZW50ZXJcIj5cbiAgICAgICAgICAgICAgPEljb24gbmFtZT1cImNoZWNrLWNpcmNsZVwiIGNvbG9yPVwic3VjY2Vzc1wiIC8-XG4gICAgICAgICAgICAgIDxUZXh0IHZhbHVlPXtpdGVtfSBzaXplPVwic21cIiAvPlxuICAgICAgICAgICAgPC9Sb3c-XG4gICAgICAgICAgKSl9XG4gICAgICAgIDwvQ29sPlxuICAgICAgICA8Um93IGdhcD17Mn0gd3JhcD1cIndyYXBcIj5cbiAgICAgICAgICB7dGVjaC5tYXAoKHQpID0-IChcbiAgICAgICAgICAgIDxCYWRnZSBrZXk9e3R9IGxhYmVsPXt0fSB2YXJpYW50PVwib3V0bGluZVwiIC8-XG4gICAgICAgICAgKSl9XG4gICAgICAgIDwvUm93PlxuICAgICAgPC9Db2w-XG4gICAgPC9Cb3g-XG4gIDwvTGlzdFZpZXdJdGVtPlxuPC9MaXN0Vmlldz4iLCJkZWZhdWx0U3RhdGUiOnsiaWQiOiJwcm9qX25vdmFwdWxzZSIsInRpdGxlIjoiTm92YVB1bHNlIEFuYWx5dGljcyIsImNhdGVnb3J5Ijoi8J-agCBTYWFTIFBsYXRmb3JtIiwiZGVzY3JpcHRpb24iOiJBSS1kcml2ZW4gY3VzdG9tZXIgaW5zaWdodHMgcGxhdGZvcm0gZGVsaXZlcmluZyByZWFsLXRpbWUgY29ob3J0IGFuYWx5c2lzLCBhbGVydHMsIGFuZCBhdXRvbWF0ZWQgcmVwb3J0aW5nIGZvciBncm93dGggdGVhbXMuIiwiaW1hZ2UiOiJodHRwczovL3VwbG9hZC53aWtpbWVkaWEub3JnL3dpa2lwZWRpYS9jb21tb25zL2MvY2QvVGVhbF9CbHVlX0Fic3RyYWN0X01hZ2ljYWxfRmFicmljX0NvbG9yZnVsX0JhY2tncm91bmRfMTAuanBnIiwiZmVhdHVyZXMiOlsiUmVhbC10aW1lIGV2ZW50IGluZ2VzdGlvbiBhbmQgZGFzaGJvYXJkcyIsIkF1dG8tc2VnbWVudGVkIGNvaG9ydHMgd2l0aCBjaHVybiByaXNrIHNjb3JpbmciLCJPbmUtY2xpY2sgcmVwb3J0cyB0byBTbGFjaywgRW1haWwsIGFuZCBOb3Rpb24iXSwidGVjaCI6WyJUeXBlU2NyaXB0IiwiUmVhY3QiLCJOb2RlLmpzIiwiUG9zdGdyZVNRTCIsIkRvY2tlciJdfSwic3RhdGVzIjpbXSwic2NoZW1hIjoiaW1wb3J0IHsgeiB9IGZyb20gXCJ6b2RcIlxuXG5jb25zdCBXaWRnZXRTdGF0ZSA9IHouc3RyaWN0T2JqZWN0KHtcbiAgaWQ6IHouc3RyaW5nKCksXG4gIHRpdGxlOiB6LnN0cmluZygpLFxuICBjYXRlZ29yeTogei5zdHJpbmcoKSxcbiAgZGVzY3JpcHRpb246IHouc3RyaW5nKCksXG4gIGltYWdlOiB6LnN0cmluZygpLFxuICBmZWF0dXJlczogei5hcnJheSh6LnN0cmluZygpKSxcbiAgdGVjaDogei5hcnJheSh6LnN0cmluZygpKSxcbn0pXG5cbmV4cG9ydCBkZWZhdWx0IFdpZGdldFN0YXRlIiwianNvblNjaGVtYSI6e30sInNjaGVtYU1vZGUiOiJ6b2QiLCJzY2hlbWFWYWxpZGl0eSI6InZhbGlkIiwidmlld1ZhbGlkaXR5IjoidmFsaWQiLCJkZWZhdWx0U3RhdGVWYWxpZGl0eSI6InZhbGlkIn0"
+}

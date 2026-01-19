@@ -104,7 +104,7 @@ export default defineType({
       options: {
         list: [
           { title: "Available for hire", value: "available" },
-          { title: "Open to opportunities", value: "open" },
+          { title: "Abierto a oportunidades", value: "open" },
           { title: "Not looking", value: "unavailable" },
         ],
       },

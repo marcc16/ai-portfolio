@@ -28,9 +28,9 @@ export async function ProjectsSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Featured Projects
+            Proyectos Destacados
           </h2>
-          <p className="text-xl text-muted-foreground">Some of my best work</p>
+          <p className="text-xl text-muted-foreground">Algunos de mis mejores trabajos</p>
         </div>
 
         <div className="@container">
@@ -75,7 +75,7 @@ export async function ProjectsSection() {
                     </p>
                   </div>
 
-                  {/* Tech Stack */}
+                  {/* Stack Tecnológico */}
                   {project.technologies && project.technologies.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 @md/card:gap-2">
                       {project.technologies.slice(0, 4).map((tech, idx) => {
@@ -109,7 +109,7 @@ export async function ProjectsSection() {
                         rel="noopener noreferrer"
                         className="flex-1 text-center px-3 py-2 @md/card:px-4 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-xs @md/card:text-sm"
                       >
-                        Live Demo
+                        Demo en Vivo
                       </Link>
                     )}
                     {project.githubUrl && (

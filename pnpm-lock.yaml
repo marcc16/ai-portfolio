@@ -85,7 +85,7 @@ dependencies:
     specifier: ^0.546.0
     version: 0.546.0(react@19.2.0)
   motion:
-    specifier: ^12.23.24
+    specifier: ^12.26.2
     version: 12.26.2(react-dom@19.2.0)(react@19.2.0)
   next:
     specifier: 16.0.0
