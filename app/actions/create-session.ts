@@ -65,26 +65,27 @@ export async function createSession() {
     const forwardedFor = (await headers()).get("x-forwarded-for");
     const realIp = (await headers()).get("x-real-ip");
 
-    // Try to get guest session ID from cookie for consistent tracking
-    const cookieStore = await cookies();
-    let guestId = cookieStore.get("guest_session_id")?.value;
-
-    // If no guest ID, create one and set cookie (will be set by middleware/response)
-    if (!guestId) {
-      guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-      // Note: Can't set cookies here in server action, needs to be done client-side or in middleware
-    }
-
-    // Use guest ID combined with IP for better tracking
-    // This prevents different browser sessions from the same IP from sharing limits
+    // Use IP address combined with a fixed prefix for consistent tracking
+    // We ignore the guest ID from cookies because it's not reliably persisted/set
+    // Using IP ensures that rate limits apply per network identity
     const ipAddress = forwardedFor || realIp || "unknown";
-    identifier = `${guestId}:${ipAddress}`;
+
+    // Fallback for local development or when IP is hidden
+    if (ipAddress === "unknown") {
+      const cookieStore = await cookies();
+      let guestId = cookieStore.get("guest_session_id")?.value;
+      if (!guestId) {
+        guestId = `guest_${Date.now()}`;
+      }
+      identifier = `ip_unknown:${guestId}`;
+    } else {
+      identifier = `ip:${ipAddress}`;
+    }
 
     // Log for debugging
     console.log("[create-session] Guest identifier:", {
       forwardedFor,
       realIp,
-      guestId,
       identifier,
       isDev: process.env.NODE_ENV === "development"
     });

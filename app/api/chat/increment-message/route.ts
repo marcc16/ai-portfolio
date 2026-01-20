@@ -24,15 +24,19 @@ export async function POST(req: NextRequest) {
       const forwardedFor = (await headers()).get("x-forwarded-for");
       const realIp = (await headers()).get("x-real-ip");
 
-      const cookieStore = await cookies();
-      let guestId = cookieStore.get("guest_session_id")?.value;
-
-      if (!guestId) {
-        guestId = `guest_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-      }
-
       const ipAddress = forwardedFor || realIp || "unknown";
-      identifier = `${guestId}:${ipAddress}`;
+
+      // Use consistent identifier logic with create-session.ts
+      if (ipAddress === "unknown") {
+        const cookieStore = await cookies();
+        let guestId = cookieStore.get("guest_session_id")?.value;
+        if (!guestId) {
+          guestId = `guest_${Date.now()}`;
+        }
+        identifier = `ip_unknown:${guestId}`;
+      } else {
+        identifier = `ip:${ipAddress}`;
+      }
     }
 
     // Check if user still has remaining messages
