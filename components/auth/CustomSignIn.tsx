@@ -18,15 +18,17 @@ export function CustomSignIn({ onSuccess }: CustomSignInProps) {
   const [error, setError] = useState("");
   const [pendingVerification, setPendingVerification] = useState(false);
 
+
   // Handle OAuth sign in
   const handleOAuthSignIn = async (strategy: "oauth_google" | "oauth_linkedin") => {
     if (!isLoaded) return;
 
     try {
+      // Use Clerk's standard OAuth method which handles redirects automatically
       await signIn.authenticateWithRedirect({
         strategy,
-        redirectUrl: window.location.origin,
-        redirectUrlComplete: window.location.origin,
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/",
       });
     } catch (err: any) {
       console.error("OAuth error:", err);
