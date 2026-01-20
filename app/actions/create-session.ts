@@ -91,21 +91,19 @@ export async function createSession() {
     });
   }
 
-  // Check daily message limit with custom limit
-  const { allowed, remaining, limit } = await hasRemainingMessages(
-    identifier,
-    isGuest,
-    messageLimit
-  );
+  // Only check rate limit for guest users
+  // Authenticated users have their own separate limits tracked per userId
+  if (isGuest) {
+    const { allowed, remaining, limit } = await hasRemainingMessages(
+      identifier,
+      isGuest,
+      messageLimit
+    );
 
-  if (!allowed) {
-    const errorMessage = isGuest
-      ? `Has alcanzado el límite de ${limit} mensajes diarios. Inicia sesión para obtener ${getMessageLimit(false, "free")} mensajes al día.`
-      : plan === "recruiter"
-        ? `Has alcanzado el límite de ${limit} mensajes diarios. Vuelve mañana para continuar.`
-        : `Has alcanzado el límite de ${limit} mensajes diarios. Actualiza a Recruiter para obtener ${getMessageLimit(false, "recruiter")} mensajes al día.`;
-
-    throw new Error(errorMessage);
+    if (!allowed) {
+      const errorMessage = `Has alcanzado el límite de ${limit} mensajes diarios. Inicia sesión para obtener ${getMessageLimit(false, "free")} mensajes al día.`;
+      throw new Error(errorMessage);
+    }
   }
 
   // Allow anonymous users - generate a guest ID
