@@ -25,8 +25,8 @@ export function CustomSignIn({ onSuccess }: CustomSignInProps) {
     try {
       await signIn.authenticateWithRedirect({
         strategy,
-        redirectUrl: `${window.location.origin}/sso-callback`,
-        redirectUrlComplete: `${window.location.origin}/`,
+        redirectUrl: window.location.origin,
+        redirectUrlComplete: window.location.origin,
       });
     } catch (err: any) {
       console.error("OAuth error:", err);

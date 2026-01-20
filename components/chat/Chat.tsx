@@ -19,6 +19,7 @@ export function Chat({
   const { isSignedIn } = useUser();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [rateLimitReached, setRateLimitReached] = useState(false);
+  const [sessionError, setSessionError] = useState(false);
   const [messageUsage, setMessageUsage] = useState<{
     remaining: number;
     limit: number;
@@ -35,6 +36,7 @@ export function Chat({
   // Handle session creation with error handling
   const handleCreateSession = useCallback(async () => {
     try {
+      setSessionError(false); // Reset error state
       const secret = await createSession();
 
       // Refresh message usage after creating session
@@ -46,6 +48,9 @@ export function Chat({
       // If rate limit exceeded, mark as reached but don't auto-show modal
       if (error instanceof Error && error.message.includes("límite")) {
         setRateLimitReached(true);
+      } else {
+        // Other errors (e.g., session creation failed)
+        setSessionError(true);
       }
       throw error;
     }
@@ -298,6 +303,40 @@ export function Chat({
             Cerrar
           </Button>
         </div>
+      </div>
+    );
+  }
+
+  // Show session error (e.g., after logout or session expired)
+  if (sessionError) {
+    return (
+      <div className="h-full w-full flex flex-col items-center justify-center p-6 text-center">
+        <div className="max-w-md space-y-6">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+            <MessageSquare className="h-8 w-8 text-primary" />
+          </div>
+          <div className="space-y-2">
+            <h3 className="text-xl font-semibold">Inicia sesión para chatear</h3>
+            <p className="text-muted-foreground">
+              Necesitas iniciar sesión para usar el chat con IA.
+            </p>
+          </div>
+          <Button
+            size="lg"
+            className="w-full"
+            onClick={() => setShowAuthModal(true)}
+          >
+            <Lock className="mr-2 h-4 w-4" />
+            Iniciar sesión
+          </Button>
+        </div>
+
+        <ChatAuthModal
+          open={showAuthModal}
+          onOpenChange={setShowAuthModal}
+          messageLimit={messageUsage?.limit || 3}
+          isGuest={!isSignedIn}
+        />
       </div>
     );
   }
