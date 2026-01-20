@@ -53,14 +53,14 @@ export function Chat({
 
   // Handle when assistant starts responding (user sent a message)
   const handleResponseStart = useCallback(async (event: any) => {
-    // Generate a unique ID for this message exchange
-    const messageId = `${Date.now()}-${Math.random()}`;
+    const now = Date.now();
 
-    // Avoid counting the same message twice
-    if (lastMessageIdRef.current === messageId) {
+    // Throttle requests: prevent multiple calls within 2 seconds
+    // This fixes the infinite loop issue if ChatKit re-triggers the event on re-renders
+    if (lastMessageIdRef.current && (now - Number(lastMessageIdRef.current)) < 2000) {
       return;
     }
-    lastMessageIdRef.current = messageId;
+    lastMessageIdRef.current = String(now);
 
     try {
       // Increment message count
