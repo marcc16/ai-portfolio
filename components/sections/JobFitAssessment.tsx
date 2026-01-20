@@ -17,7 +17,7 @@ interface AssessmentResult {
     summary: string;
     strengths: string[];
     gaps: string[];
-    verdict: "High Match" | "Potential Match" | "Low Match";
+    verdict: "Alta Compatibilidad" | "Compatibilidad Potencial" | "Baja Compatibilidad";
     usage?: {
         remaining: number;
         limit: number;

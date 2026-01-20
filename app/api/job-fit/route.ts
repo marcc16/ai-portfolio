@@ -152,32 +152,35 @@ export async function POST(req: Request) {
         messages: [
           {
             role: "system",
-            content: `You are an expert AI Recruiter. You respond ONLY in valid JSON format.
+            content: `Eres un experto reclutador de IA. Respondes SOLO en formato JSON válido y SIEMPRE en español.
             
-            The JSON object structure must be EXACTLY:
+            La estructura del objeto JSON debe ser EXACTAMENTE:
             {
-              "matchScore": number (0-100),
-              "summary": string (brief, honest but persuasive, 2-3 sentences),
-              "strengths": string[] (3-4 key matching skills),
-              "gaps": string[] (2-3 missing but constructively framed),
-              "verdict": "High Match" | "Potential Match" | "Low Match"
-            }`
+              "matchScore": número (0-100),
+              "summary": string (breve, honesto pero persuasivo, 2-3 frases en español),
+              "strengths": string[] (3-4 habilidades clave que coinciden, en español),
+              "gaps": string[] (2-3 áreas de mejora pero formuladas constructivamente, en español),
+              "verdict": "Alta Compatibilidad" | "Compatibilidad Potencial" | "Baja Compatibilidad"
+            }
+            
+            IMPORTANTE: Toda la respuesta debe estar en español, incluyendo summary, strengths, gaps y verdict.`
           },
           {
             role: "user",
             content: `
-            ANALYZE CANDIDATE FIT based on the provided CV and Job Description.
+            ANALIZA LA COMPATIBILIDAD DEL CANDIDATO basándote en el CV proporcionado y la Descripción del Puesto.
             
-            CANDIDATE CV:
+            CV DEL CANDIDATO:
             ${MY_CV}
     
-            JOB DESCRIPTION:
+            DESCRIPCIÓN DEL PUESTO:
             ${jobDescription}
     
-            INSTRUCTIONS:
-            1. Analyze fit based on skills and experience.
-            2. BE HONEST but BENEFICIAL: Highlight transferrable skills. If he knows Python/FastAPI but job asks for Django, treat it as a strength/minor gap.
-            3. OUTPUT MUST BE A SINGLE VALID JSON OBJECT.
+            INSTRUCCIONES:
+            1. Analiza la compatibilidad basándote en habilidades y experiencia.
+            2. SÉ HONESTO pero BENEFICIOSO: Destaca habilidades transferibles. Si conoce Python/FastAPI pero el puesto pide Django, trátalo como una fortaleza/brecha menor.
+            3. LA SALIDA DEBE SER UN ÚNICO OBJETO JSON VÁLIDO.
+            4. TODO EL CONTENIDO DEBE ESTAR EN ESPAÑOL (summary, strengths, gaps, verdict).
             `
           }
         ]
