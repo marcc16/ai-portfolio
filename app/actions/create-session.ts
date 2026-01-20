@@ -91,7 +91,9 @@ export async function createSession() {
     });
   }
 
-  // Check daily message limit with custom limit
+  // TEMPORARILY DISABLED FOR DEBUGGING - Rate limit check
+  // TODO: Re-enable after fixing login issue
+  /*
   const { allowed, remaining, limit } = await hasRemainingMessages(
     identifier,
     isGuest,
@@ -107,6 +109,7 @@ export async function createSession() {
 
     throw new Error(errorMessage);
   }
+  */
 
   // Allow anonymous users - generate a guest ID
   const sessionUserId = userId || `guest_${Date.now()}_${Math.random().toString(36).substring(7)}`;
