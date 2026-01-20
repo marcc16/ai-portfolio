@@ -1,16 +1,15 @@
 "use client";
 
 import { AuthenticateWithRedirectCallback } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 
 export default function SSOCallbackPage() {
-    const router = useRouter();
-
     return (
-        <AuthenticateWithRedirectCallback
-            afterSignInUrl="/"
-            afterSignUpUrl="/"
-            redirectUrl="/"
-        />
+        <div className="flex min-h-screen items-center justify-center bg-black/95">
+            {/* Handle the callback and redirect to home */}
+            <AuthenticateWithRedirectCallback
+                signInForceRedirectUrl="/"
+                signUpForceRedirectUrl="/"
+            />
+        </div>
     );
 }
