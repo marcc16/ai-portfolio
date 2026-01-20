@@ -16,7 +16,7 @@ export function Chat({
   profile: CHAT_PROFILE_QUERYResult | null;
 }) {
   const { toggleSidebar } = useSidebar();
-  const { isSignedIn } = useUser();
+  const { isSignedIn, isLoaded: clerkLoaded } = useUser();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [rateLimitReached, setRateLimitReached] = useState(false);
   const [sessionError, setSessionError] = useState(false);
@@ -185,6 +185,15 @@ export function Chat({
       text: "Aviso: Este es mi clon digital con IA. Puede no ser 100% preciso, verifica la información importante.",
     },
   });
+
+  // Wait for Clerk to load before showing chat to avoid rate limit issues during OAuth callback
+  if (!clerkLoaded) {
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   // Show blocked state if rate limit reached (but user can still close sidebar)
   if (rateLimitReached && !isSignedIn) {
