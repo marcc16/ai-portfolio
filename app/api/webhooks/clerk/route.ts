@@ -32,6 +32,9 @@ export async function POST(req: Request) {
     // Get the body as raw text (required by Svix)
     const body = await req.text()
 
+    console.log('[Webhook] Body length:', body.length);
+    console.log('[Webhook] Body preview:', body.substring(0, 200));
+
     // Create a new Svix instance with your secret.
     const wh = new Webhook(WEBHOOK_SECRET)
 
@@ -44,9 +47,20 @@ export async function POST(req: Request) {
             "svix-timestamp": svix_timestamp,
             "svix-signature": svix_signature,
         }) as WebhookEvent
+
+        console.log('[Webhook] Verification successful');
     } catch (err) {
-        console.error('Error verifying webhook:', err);
-        return new Response('Error occured', {
+        console.error('[Webhook] Error verifying webhook:', err);
+        return new Response('Error verifying webhook signature', {
+            status: 400
+        })
+    }
+
+    // Verificar que evt no sea null
+    if (!evt || !evt.type) {
+        console.error('[Webhook] evt is null or missing type after verification');
+        console.error('[Webhook] evt value:', evt);
+        return new Response('Invalid webhook payload', {
             status: 400
         })
     }
