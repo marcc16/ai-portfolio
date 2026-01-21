@@ -24,13 +24,25 @@ export async function POST(req: Request) {
 
     // If there are no headers, error out
     if (!svix_id || !svix_timestamp || !svix_signature) {
+        console.error('[Webhook] Missing svix headers');
         return new Response('Error occured -- no svix headers', {
             status: 400
         })
     }
 
     // Get the body as raw text (required by Svix)
-    const body = await req.text()
+    // Using clone to avoid consuming the original request
+    let body: string;
+    try {
+        const payload = await req.json();
+        body = JSON.stringify(payload);
+        console.log('[Webhook] Body parsed from JSON');
+    } catch (error) {
+        console.error('[Webhook] Error parsing body as JSON:', error);
+        return new Response('Invalid JSON body', {
+            status: 400
+        })
+    }
 
     console.log('[Webhook] Body length:', body.length);
     console.log('[Webhook] Body preview:', body.substring(0, 200));
