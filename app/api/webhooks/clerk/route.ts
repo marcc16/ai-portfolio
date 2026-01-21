@@ -84,9 +84,34 @@ export async function POST(req: Request) {
     console.log('Event Type:', eventType);
     console.log('Event Data:', JSON.stringify(evt.data, null, 2));
 
+    // Handle user.created
     if (eventType === 'user.created') {
         // Welcome email or initial setup
         console.log(`User created: ${evt.data.id}`);
+    }
+
+    // Handle user.updated - Sometimes Clerk updates metadata directly
+    if (eventType === 'user.updated') {
+        console.log('=== PROCESSING USER.UPDATED EVENT ===');
+
+        // @ts-ignore
+        const userData = evt.data;
+        // @ts-ignore
+        const userId = userData.id;
+        // @ts-ignore
+        const publicMetadata = userData.public_metadata || {};
+
+        console.log('User ID:', userId);
+        console.log('Public Metadata:', JSON.stringify(publicMetadata, null, 2));
+
+        // Check if this update includes subscription information
+        // @ts-ignore
+        if (publicMetadata.subscriptionPlan) {
+            // @ts-ignore
+            const plan = publicMetadata.subscriptionPlan;
+            console.log(`✅ Detected plan in metadata: ${plan}`);
+            // Plan already updated by Clerk, nothing to do
+        }
     }
 
     // Handle Billing Events
