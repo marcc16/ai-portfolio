@@ -71,18 +71,26 @@ export async function POST(req: Request) {
 
     if (billingEvents.includes(eventType)) {
         console.log('=== PROCESSING BILLING EVENT ===');
+        console.log('Event type:', eventType);
+        console.log('Full event data:', JSON.stringify(evt.data, null, 2));
 
         // @ts-ignore - Billing events might not be fully typed in current SDK version
         const eventData = evt.data;
 
-        // Extract userId - it could be in different places depending on the event
+        // Try multiple ways to extract userId
         // @ts-ignore
-        let userId = eventData.user_id || eventData.subscription?.user_id;
+        let userId = eventData.user_id ||
+            eventData.subscription?.user_id ||
+            eventData.object?.subscription?.customer_id;
 
-        console.log('User ID from event:', userId);
+        console.log('Extracted user ID:', userId);
 
         if (!userId) {
-            console.error('No userId found in billing event');
+            console.error('❌ Failed to extract userId from event');
+            console.error('Event keys available:', Object.keys(eventData));
+            if (eventData.subscription) {
+                console.error('Subscription keys:', Object.keys(eventData.subscription));
+            }
             return new Response('', { status: 200 });
         }
 

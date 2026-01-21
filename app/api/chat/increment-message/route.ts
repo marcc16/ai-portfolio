@@ -76,23 +76,54 @@ async function getUserPlan(userId: string): Promise<"free" | "recruiter"> {
     const client = await clerkClient();
     const user = await client.users.getUser(userId);
 
+    console.log('=== GETTING USER PLAN (increment-message) ===');
+    console.log('User ID:', userId);
+    console.log('User email:', user.emailAddresses[0]?.emailAddress);
+    console.log('User public metadata:', JSON.stringify(user.publicMetadata, null, 2));
+    console.log('User private metadata:', JSON.stringify(user.privateMetadata, null, 2));
+
+    // Check organization memberships
     // @ts-ignore
     const subscriptions = user.organizationMemberships || [];
+    console.log('Organization memberships count:', subscriptions.length);
+
+    if (subscriptions.length > 0) {
+      console.log('Organization memberships:', JSON.stringify(subscriptions, null, 2));
+    }
+
     const hasRecruiterPlan = subscriptions.some(
       (membership: any) => membership.organization?.publicMetadata?.plan === "recruiter"
     );
+    console.log('Has recruiter via org:', hasRecruiterPlan);
 
-    if (hasRecruiterPlan) return "recruiter";
+    if (hasRecruiterPlan) {
+      console.log('✅ Returning recruiter (via organization)');
+      return "recruiter";
+    }
 
+    // Check public metadata
     const plan = user.publicMetadata?.subscriptionPlan as string | undefined;
-    if (plan === "recruiter") return "recruiter";
+    console.log('subscriptionPlan in publicMetadata:', plan);
 
+    if (plan === "recruiter") {
+      console.log('✅ Returning recruiter (via publicMetadata)');
+      return "recruiter";
+    }
+
+    // Check private metadata
     const privateMetadataPlan = user.privateMetadata?.subscriptionPlan as string | undefined;
-    if (privateMetadataPlan === "recruiter") return "recruiter";
+    console.log('subscriptionPlan in privateMetadata:', privateMetadataPlan);
 
+    if (privateMetadataPlan === "recruiter") {
+      console.log('✅ Returning recruiter (via privateMetadata)');
+      return "recruiter";
+    }
+
+    console.log('⚠️ Returning free (no recruiter plan found anywhere)');
+    console.log('=== END GETTING USER PLAN ===');
     return "free";
   } catch (error) {
-    console.error("Error fetching user plan:", error);
+    console.error("❌ Error fetching user plan:", error);
     return "free";
   }
 }
