@@ -15,6 +15,7 @@ import SidebarToggle from "@/components/SidebarToggle";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AuthRefreshHandler } from "@/components/AuthRefreshHandler";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -100,7 +101,9 @@ export default async function RootLayout({
 
             <SidebarProvider defaultOpen={false}>
               {/* Handler para detectar callback de SSO y forzar refresh */}
-              <AuthRefreshHandler />
+              <Suspense fallback={null}>
+                <AuthRefreshHandler />
+              </Suspense>
 
               <SidebarInset className="">{children}</SidebarInset>
 
