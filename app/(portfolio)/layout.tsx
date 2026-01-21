@@ -14,6 +14,7 @@ import { FloatingDock } from "@/components/FloatingDock";
 import SidebarToggle from "@/components/SidebarToggle";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AuthRefreshHandler } from "@/components/AuthRefreshHandler";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -98,6 +99,9 @@ export default async function RootLayout({
             />
 
             <SidebarProvider defaultOpen={false}>
+              {/* Handler para detectar callback de SSO y forzar refresh */}
+              <AuthRefreshHandler />
+
               <SidebarInset className="">{children}</SidebarInset>
 
               <AppSidebar side="right" />
