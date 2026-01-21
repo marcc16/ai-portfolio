@@ -135,16 +135,28 @@ export async function POST(req: Request) {
         // Try multiple ways to extract userId
         // @ts-ignore
         let userId = eventData.user_id ||
+            eventData.payer?.user_id ||  // For subscriptionItem events
             eventData.subscription?.user_id ||
             eventData.object?.subscription?.customer_id;
 
         console.log('Extracted user ID:', userId);
+
+        // Also log payer info if available
+        // @ts-ignore
+        if (eventData.payer) {
+            console.log('Payer info:', JSON.stringify(eventData.payer, null, 2));
+        }
 
         if (!userId) {
             console.error('❌ Failed to extract userId from event');
             console.error('Event keys available:', Object.keys(eventData));
             if (eventData.subscription) {
                 console.error('Subscription keys:', Object.keys(eventData.subscription));
+            }
+            // @ts-ignore
+            if (eventData.payer) {
+                // @ts-ignore
+                console.error('Payer keys:', Object.keys(eventData.payer));
             }
             return new Response('', { status: 200 });
         }
